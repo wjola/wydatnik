@@ -6,7 +6,7 @@ const Expense = ({ amount = 0, category = '', date = moment(), details = '' }) =
         <>
             <h1>{amount}</h1>
             <h3>{category}</h3>
-            <h5>{date.format()}</h5>
+            <h5>{date.format('D/MM/YYYY')}</h5>
             <p>{details}</p>
         </>
     );
