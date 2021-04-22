@@ -14,13 +14,36 @@ const ExpenseForm = (props) => {
     const onClick = (e) => {
         e.preventDefault();
 
-        const expense = {
-            amount,
-            date,
-            category,
-            details
+        if (isAmountValid()) {
+            const expense = {
+                amount: parseFloat(amount),
+                date,
+                category,
+                details
+            }
+            console.log(expense);
+            props.addExpense(expense);
+
+            clearForm();
         }
-        props.addExpense(expense);
+    }
+
+    const onAmountChange = (e) => {
+        const amount = e.target.value;
+        const regexp = /^\d+\.\d\d\d$/;
+
+        if (!amount.match(regexp)) {
+            setAmount(amount);
+        }
+    }
+
+    const isAmountValid = () => {
+        const regexp = /^([1-9]\d*((\.|\,)\d\d?)?)|(0(\.|\,)\d\d?)$/;
+
+        return amount.match(regexp);
+    }
+
+    const clearForm = () => {
         setAmount('');
         setCategory('');
         setDetails('');
@@ -30,7 +53,7 @@ const ExpenseForm = (props) => {
     return (
         <form>
             <label htmlFor='amount'>Podaj kwotę</label>
-            <input type='number' id='amount' value={amount} onChange={(e) => setAmount(e.target.value)} autoFocus required />
+            <input type='number' id='amount' value={amount} onChange={onAmountChange} autoFocus required />
             <label htmlFor='date'>Wybierz datę</label>
             <SingleDatePicker id='date'
                               date={date}
