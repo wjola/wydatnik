@@ -7,6 +7,7 @@ const MainPage = () => {
     return (
         <>
             <Header />
+            <AddExpense />
             <ExpenseList />
         </>
     );

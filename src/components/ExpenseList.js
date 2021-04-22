@@ -13,6 +13,6 @@ const ExpenseList = (props) => {
     ));
 }
 
-const mapStateToProps = (state) => ({ expenses: state.expenses });
+const mapStateToProps = (state) => ({ expenses: state });
 
 export default connect(mapStateToProps)(ExpenseList);
