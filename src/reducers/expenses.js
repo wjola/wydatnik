@@ -1,20 +1,22 @@
+import moment from 'moment';
+
 const defaultExpenses = [
     {
         amount: 456.78,
         category: 'Dom',
-        date: '01-01-2021',
+        date: moment(325987982359),
         details: 'Kwiatki w Castoramie'
     },
     {
         amount: 123.45,
         category: 'Spożywcze',
-        date: '13-04-2021',
+        date: moment(10962098901),
         details: 'Zakupy w Lidlu'
     },
     {
         amount: 12.45,
         category: 'Chemia',
-        date: '13-04-2021',
+        date: moment(12487489390),
         details: 'Rossmann'
     }
 ];

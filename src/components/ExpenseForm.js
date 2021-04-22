@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { SingleDatePicker } from 'react-dates';
+import moment from 'moment';
 import { addExpense } from '../actions/expenses';
 
 const ExpenseForm = (props) => {
     const [amount, setAmount] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(moment());
     const [category, setCategory] = useState('');
     const [details, setDetails] = useState('');
+    const [calendarFocused, setCalendarFocused] = useState(false);
 
     const onClick = (e) => {
         e.preventDefault();
-        console.log(amount, category, details);
+
         const expense = {
             amount,
             date,
@@ -21,12 +24,22 @@ const ExpenseForm = (props) => {
         setAmount('');
         setCategory('');
         setDetails('');
+        setDate(moment());
     }
 
     return (
         <form>
             <label htmlFor='amount'>Podaj kwotę</label>
             <input type='number' id='amount' value={amount} onChange={(e) => setAmount(e.target.value)} autoFocus required />
+            <label htmlFor='date'>Wybierz datę</label>
+            <SingleDatePicker id='date'
+                              date={date}
+                              onDateChange={date => setDate(date)}
+                              focused={calendarFocused}
+                              onFocusChange={({ focused }) => setCalendarFocused(focused)}
+                              numberOfMonths={1}
+                              isOutsideRange={() => false}
+            />
             <label htmlFor='category'>Wybierz kategorię</label>
             <select id='category' value={category} onChange={(e) => setCategory(e.target.value)} required>
                 <option value='groceries'>spożywcze</option>

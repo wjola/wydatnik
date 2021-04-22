@@ -1,11 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 
-const Expense = ({ amount = 0, category = '', date = '01-01-1970', details = '' }) => {
+const Expense = ({ amount = 0, category = '', date = moment(), details = '' }) => {
     return (
         <>
             <h1>{amount}</h1>
             <h3>{category}</h3>
-            <h5>{date}</h5>
+            <h5>{date.format()}</h5>
             <p>{details}</p>
         </>
     );
