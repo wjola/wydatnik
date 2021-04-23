@@ -1,28 +1,37 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
+import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { addExpense } from '../actions/expenses';
+import { addExpense, editExpense } from '../actions/expenses';
 
-const ExpenseForm = (props) => {
-    const [amount, setAmount] = useState('');
-    const [date, setDate] = useState(moment());
-    const [category, setCategory] = useState('');
-    const [details, setDetails] = useState('');
+const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
+    const isExpenseEdited = !!expense;
+
+    const [amount, setAmount] = useState(expense.amount || '');
+    const [date, setDate] = useState(expense.date || moment());
+    const [category, setCategory] = useState(expense.category || '');
+    const [details, setDetails] = useState(expense.details || '');
     const [calendarFocused, setCalendarFocused] = useState(false);
+    const history = useHistory();
 
     const onClick = (e) => {
         e.preventDefault();
 
+        const expenseFromForm = {
+            amount: parseFloat(amount),
+            date,
+            category,
+            details
+        }
+
         if (isAmountValid()) {
-            const expense = {
-                amount: parseFloat(amount),
-                date,
-                category,
-                details
+            if (isExpenseEdited) {
+                editExpense(expense.id, { ...expenseFromForm });
+                history.push('/');
+            } else {
+                addExpense(...expenseFromForm);
             }
-            console.log(expense);
-            props.addExpense(expense);
 
             clearForm();
         }
@@ -74,13 +83,14 @@ const ExpenseForm = (props) => {
             </select>
             <label htmlFor='details'>Dodaj komentarz</label>
             <textarea id='details' value={details} onChange={(e) => setDetails(e.target.value)}></textarea>
-            <button onClick={onClick}>Dodaj</button>
+            <button onClick={onClick}>{isExpenseEdited ? `Zapisz` : `Dodaj`}</button>
         </form>
     );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addExpense: (expense) => dispatch(addExpense(expense))
+    addExpense: (expense) => dispatch(addExpense(expense)),
+    editExpense: (id, updates) => dispatch(editExpense(id, updates))
 })
 
 export default connect(undefined, mapDispatchToProps)(ExpenseForm);

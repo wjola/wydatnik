@@ -7,3 +7,10 @@ export const addExpense = (expense) => {
     }
 }
 
+export const editExpense = (id, updates) => {
+    return {
+        type: 'EDIT_EXPENSE',
+        id,
+        updates
+    }
+}
