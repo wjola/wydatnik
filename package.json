@@ -7,7 +7,8 @@
     "build-babel": "babel src/app.js --out-file=public/app.js --presets=@babel/preset-env,@babel/preset-react --watch",
     "build": "webpack --watch",
     "dev-server": "webpack serve --open",
-    "test": "test"
+    "test": "test",
+    "compile:sass": "node-sass src/styles/main.scss public/styles.css -w"
   },
   "repository": {
     "type": "git",
@@ -20,19 +21,25 @@
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
+    "mini-svg-data-uri": "^1.2.3",
     "moment": "^2.29.1",
+    "node-sass": "^5.0.0",
     "react": "^17.0.2",
     "react-dates": "^21.8.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
+    "sass-loader": "^11.0.1",
+    "save-dev": "0.0.1-security",
+    "url-loader": "^4.1.1",
     "uuid": "^8.3.2",
     "webpack": "^5.35.0"
   },
   "devDependencies": {
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
     "style-loader": "^2.0.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"

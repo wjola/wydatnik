@@ -1,0 +1,39 @@
+:root {
+    --base-navy: #221F87;
+    --base-light: #FAEFFF;
+    --gradient-pink: #891EBB;
+    --purple--light: #F4F2F2;
+    --off-white: #FDF8FF;
+    --font-dark: #3A2394;
+}
+
+body {
+    background-color: var(--base-navy);
+    background-image: radial-gradient(circle, var(--gradient-pink), 50%, transparent);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#app {
+    height: 100vh;
+}
+
+.icon {
+    height: 100%;
+
+    &--dark { 
+        margin-right: 5rem;
+     }
+    &--light { fill: var(--font-light); }
+}

@@ -1,0 +1,19 @@
+.nav-container {
+    background-color: var(--base-light);
+    display: flex;
+    height: 13%;
+    justify-content: flex-end;
+    padding: 2rem 5rem;
+}
+
+.nav-element {
+    background-color: var(--font-dark);
+    border-radius: 10rem;
+    height: 15rem;
+    padding: 3rem;
+    width: 15rem;
+
+    & + & {
+        margin-left: 3rem;
+    }
+}

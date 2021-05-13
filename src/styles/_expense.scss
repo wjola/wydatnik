@@ -1,0 +1,56 @@
+.expense-item {
+    background-color: var(--off-white);
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px 0px rgba(20, 20, 20, 0.1);
+    color: var(--font-dark);
+    font-family: 'Baloo Da 2';
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
+    padding: 3rem;
+    width: 100%;
+
+    &__amount {
+        font-size: 5rem;
+    }
+
+    &__date {
+        font-size: 4rem;
+    }
+
+    &__details {
+        margin: 2rem 0;
+    }
+
+    &--expanded {
+        display: block;
+    }
+
+    &--hidden {
+        display: none;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__icon-container {
+        height: 5rem;
+    }
+}
+
+.expense-category {
+    border-radius: 20px;
+    color: var(--off-white);
+    display: inline-block;
+    line-height: 4rem;
+    padding: 1rem 3rem;
+
+    &--groceries { background-color: #0185FF; }
+    &--drugstore { background-color: #04CABE; }
+    &--goouts { background-color: #048339; }
+    &--gifts { background-color: #a03b9b; }
+    &--alcohol { background-color: #3139a8; }
+    &--home { background-color: #FFC701; }
+    &--fuel { background-color: #936032; }   
+}

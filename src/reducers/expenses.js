@@ -5,21 +5,21 @@ const defaultExpenses = [
     {
         id: 1,
         amount: 456.78,
-        category: 'Dom',
+        category: 'home',
         date: moment(325987982359),
         details: 'Kwiatki w Castoramie'
     },
     {
         id: 2,
         amount: 123.45,
-        category: 'Spożywcze',
+        category: 'groceries',
         date: moment(10962098901),
         details: 'Zakupy w Lidlu'
     },
     {
         id: 4,
         amount: 12.45,
-        category: 'Chemia',
+        category: 'drugstore',
         date: moment(12487489390),
         details: 'Rossmann'
     }

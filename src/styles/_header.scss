@@ -1,0 +1,15 @@
+.header {
+    align-items: center;
+    background-image: url(../../images/header_figures.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    height: 15vh;
+    justify-content: center;
+}
+
+.title {
+    color: var(--purple--light);
+    font-family: 'Roboto Slab';
+    font-size: 10rem;
+}

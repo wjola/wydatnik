@@ -1,4 +1,5 @@
 const path = require('path');
+const svgToMiniDataURI = require('mini-svg-data-uri');
 
 module.exports = {
     mode: 'development',
@@ -22,14 +23,30 @@ module.exports = {
             }
           }
         }, {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          test: /\.s?css$/,
+          use: [
+              'style-loader',
+              'css-loader',
+              'sass-loader'
+          ]
+        }, {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: 'file-loader'
+            },
+          ],
         }
       ]
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),
         port: 9000,
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: true,
+        watchOptions: { 
+          aggregateTimeout: 300, 
+          poll: true 
+        }
     }
 }
