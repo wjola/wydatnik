@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import FilterIcon from '../../images/filter.svg';
 
 const FiltersList = () => {
@@ -11,11 +12,11 @@ const FiltersList = () => {
     return (
         <div className='filters-container'>
             <div className='filters__button-container'>
-                {!filtersActive && <button className='filter-button filter-button--dark'
+                {!filtersActive && <Link to='/filters' className='filter-button filter-button--dark'
                                            onClick={toggleFilters}>
                                         <img src={FilterIcon} className='icon icon--light' />
                                         Filtruj
-                                   </button>
+                                   </Link>
                 }
                 {filtersActive && <><button className='filter-button filter-button--light'>
                                         Resetuj filtry
