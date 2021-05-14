@@ -5,13 +5,12 @@
     --purple--light: #F4F2F2;
     --off-white: #FDF8FF;
     --font-dark: #3A2394;
+    --nav-height: 13vh;
 }
 
 body {
-    background-color: var(--base-navy);
-    background-image: radial-gradient(circle, var(--gradient-pink), 50%, transparent);
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: var(--base-light);
+    box-sizing: border-box;
     height: 100vh;
     width: 100vw;
 }
@@ -20,12 +19,14 @@ html {
     font-size: 62.5%;
 }
 
-* {
-    box-sizing: border-box;
+*, *::after, *::before {
+    box-sizing: inherit;
     margin: 0;
 }
 
 #app {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
 }
 

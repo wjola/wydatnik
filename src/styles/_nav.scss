@@ -1,9 +1,12 @@
 .nav-container {
     background-color: var(--base-light);
+    bottom: 0;
     display: flex;
-    height: 13%;
+    height: var(--nav-height);
     justify-content: flex-end;
     padding: 2rem 5rem;
+    position: fixed;
+    width: 100vw;
 }
 
 .nav-element {

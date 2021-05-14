@@ -1,15 +1,8 @@
 .expense-list-container {
     background-color: var(--base-light);
     color: var(--font-dark);
+    flex: 1 1 auto;
     font-family: 'Baloo Da 2';
     font-size: 4rem;
-    height: 73%;
-    padding: 4rem;
-}
-
-.filter-button {
-    background-color: var(--font-dark);
-    border-radius: 10rem;
-    height: 10rem;
-    padding: 2rem 4rem;
+    padding: 4rem 4rem var(--nav-height);
 }
