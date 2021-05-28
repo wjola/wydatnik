@@ -32,10 +32,7 @@
 
 .category__checkbox {
     display: inline-block;
-
-    & + & {
-        margin-left: 2rem;
-    }
+    margin-right: 2rem;
 }
 
 .category__icon {
