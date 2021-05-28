@@ -6,7 +6,7 @@ import { defaultFilters } from '../reducers/filters';
 import { categoriesData } from '../reducers/expenses';
 
 const FiltersList = ({ filters }) => {
-    const [filtersActive, setFiltersActive] = useState(true);
+    const [filtersActive, setFiltersActive] = useState(false);
 
     useEffect(() => {
         for(const property in filters) {
@@ -18,9 +18,12 @@ const FiltersList = ({ filters }) => {
             }
         }
         setFiltersActive(false);
-    });
+    }, [filters]);
 
     const isFilterSet = (filterName) => {
+        if (filterName === 'categories') {
+            return filters[filterName].length !== defaultFilters[filterName].length;
+        }
         return filters[filterName] !== defaultFilters[filterName];
     }
 

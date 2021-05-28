@@ -92,8 +92,8 @@ const FiltersPage = (props) => {
                             endDate={props.filters.endDate}
                             endDateId="endDateId"
                             onDatesChange={({ startDate, endDate }) => {
-                                props.setStartDate(startDate);
-                                props.setEndDate(endDate);
+                                props.setStartDate(startDate.startOf('day'));
+                                props.setEndDate(endDate.startOf('day'));
                             }}
                             focusedInput={calendarFocus}
                             onFocusChange={focusedInput => setCalendarFocus(focusedInput)}

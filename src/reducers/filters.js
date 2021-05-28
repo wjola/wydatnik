@@ -4,8 +4,8 @@ export const defaultFilters = {
     amountFrom: null,
     amountTo: null,
     categories: [],
-    startDate: moment(0),
-    endDate: moment(),
+    startDate: moment(0).startOf('day'),
+    endDate: moment().startOf('day'),
     sortBy: 'date'
 }
 
