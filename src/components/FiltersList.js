@@ -1,42 +1,114 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FilterIcon from '../../images/filter.svg';
+import { defaultFilters } from '../reducers/filters';
+import { categoriesData } from '../reducers/expenses';
 
-const FiltersList = () => {
-    const [filtersActive, setFiltersActive] = useState(false);
+const FiltersList = ({ filters }) => {
+    const [filtersActive, setFiltersActive] = useState(true);
 
-    const toggleFilters = () => {
-        setFiltersActive(!filtersActive);
+    useEffect(() => {
+        for(const property in filters) {
+            if (!filtersActive && isFilterSet(property)) {
+                setFiltersActive(true);
+                return;
+            } else if (filtersActive && isFilterSet(property)) {
+                return;
+            }
+        }
+        setFiltersActive(false);
+    });
+
+    const isFilterSet = (filterName) => {
+        return filters[filterName] !== defaultFilters[filterName];
+    }
+
+    const clearFilters = () => {
+        for(const property in filters) {
+            filters[property] = defaultFilters[property];
+        }
+        setFiltersActive(false);
+    }
+
+    const getCategoryDisplayedName = (name) => {
+        const index = categoriesData.findIndex(category => category.name === name);
+        return categoriesData[index].displayedName;
+    }
+
+    const getCategoriesSetting = () => {
+        return (isFilterSet('categories') &&
+            <p>
+                Kategorie: {filters.categories.map(category => getCategoryDisplayedName(category)).join(', ')}
+            </p>
+        );
+    }
+
+    const getDatesSetting = () => {
+        let datesString = ``;
+
+        if (isFilterSet('startDate')) {
+            datesString += `od ${filters.startDate}`;
+        }
+        if (isFilterSet('endDate')) {
+            datesString += ` do ${filters.endDate}`
+        }
+
+        return (datesString.length > 0 && <p>Data: {datesString} </p>);
+    }
+
+    const getAmountSetting = () => {
+        let amountString = ``;
+
+        if (isFilterSet('amountFrom')) {
+            amountString += `od ${filters.amountFrom} zł`
+        }
+        if (isFilterSet('amountTo')) {
+            amountString += ` do ${filters.amountTo} zł`
+        }
+
+        return (amountString.length > 0 && <p>Kwota: {amountString}</p>);
+    }
+
+    const getSortSetting = () => {
+        return (<p>Sortowanie po: {filters.sortBy === 'date' ? 'dacie' : 'kwocie'}</p>);
     }
 
     return (
         <div className='filters-container'>
             <div className='filters__button-container'>
-                {!filtersActive && <Link to='/filters' className='filter-button filter-button--dark'
-                                           onClick={toggleFilters}>
-                                        <img src={FilterIcon} className='icon icon--light' />
-                                        Filtruj
-                                   </Link>
+                {filtersActive && <button
+                                      className='filter-button filter-button--light'
+                                      onClick={clearFilters}
+                                  >
+                                      Resetuj filtry
+                                  </button>
                 }
-                {filtersActive && <><button className='filter-button filter-button--light'>
-                                        Resetuj filtry
-                                    </button>
-                                    <button className='filter-button filter-button--dark'>
-                                        <img src={FilterIcon} className='icon icon--light' />
-                                        Zmień filtry
-                                    </button></>
-                }
+                <Link
+                    to='/filters'
+                    className='filter-button filter-button--dark'
+                >
+                    <img src={FilterIcon} className='icon icon--light' />
+                    {filtersActive ? 'Zmień filtry' : 'Filtruj'}
+                </Link>
             </div>
             {filtersActive &&
                 <div className='filters__settings'>
                     <p>Wydatki spełniające kryteria:</p>
-                    <p>Data:</p>
-                    <p>Kategorie:</p>
-                    <p>Kwota:</p>
+                    {getDatesSetting()}
+                    {getCategoriesSetting()}
+                    {getAmountSetting()}
+                    {getSortSetting()}
                 </div>
             }
         </div>
     );
 }
 
-export default FiltersList;
+const mapStateToProps = (state) => {
+    return {
+        filters: state.filters
+    }
+}
+
+export default connect(mapStateToProps)(FiltersList);

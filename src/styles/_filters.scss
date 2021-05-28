@@ -1,7 +1,6 @@
 .filter-button {
     border-radius: 15rem;
     display: flex;
-    font-family: 'Baloo Da 2';
     font-size: 4rem;
     height: 10rem;
     padding: 2rem 4rem;
@@ -38,4 +37,50 @@
 .filters__button-container {
     display: flex;
     justify-content: flex-end;
+}
+
+.filters__body {
+    color: var(--font-dark);
+    flex: 1 1 auto;
+    font-size: 4rem;
+    padding: 4rem 4rem var(--nav-height);
+}
+
+.filters__criterion {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+}
+
+.filters__input {
+    width: 45%;
+
+    & + & {
+        margin-left: 2rem;
+    }
+}
+
+input[name=sort] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border: 2px solid var(--font-dark);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 5rem;
+    transition: 0.2s all linear;
+    vertical-align: middle;
+    width: 5rem;
+
+    &:checked {
+        border: 1.5rem solid var(--font-dark);
+    }
+
+    & + label {
+        cursor: pointer;
+        margin-right: 3rem;
+        position: relative;
+        padding-left: 2.5rem;
+    }
 }

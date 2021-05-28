@@ -1,6 +1,7 @@
 @import './_header.scss';
 @import './_base.scss';
 @import './expenseList';
-@import './expense';
-@import './nav';
-@import './filters';
+@import './_expense';
+@import './_nav';
+@import './_filters';
+@import './_category';

@@ -1,0 +1,45 @@
+.expense-category {
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+    color: var(--off-white);
+    cursor: default;
+    display: flex;
+    font-family: inherit;
+    font-size: inherit;
+    align-items: center;
+    line-height: 4rem;
+    margin-bottom: 0;
+    padding: 1rem 3rem;
+
+    &--clickable {
+        cursor: pointer;
+        margin-bottom: 2rem;
+    }
+
+    &--groceries { background-color: #0185FF; }
+    &--drugstore { background-color: #04CABE; }
+    &--goouts { background-color: #048339; }
+    &--gifts { background-color: #a03b9b; }
+    &--alcohol { background-color: #3139a8; }
+    &--home { background-color: #FFC701; }
+    &--car { background-color: #936032; }
+
+    & > span {
+        height: 4rem;
+    }
+}
+
+.category__checkbox {
+    display: inline-block;
+
+    & + & {
+        margin-left: 2rem;
+    }
+}
+
+.category__icon {
+    height: 4rem;
+    margin-left: 2rem;
+    width: 4rem;
+}

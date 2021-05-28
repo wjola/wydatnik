@@ -2,6 +2,7 @@
     --base-navy: #221F87;
     --base-light: #FAEFFF;
     --gradient-pink: #891EBB;
+    --light-pink: #C29CD4;
     --purple--light: #F4F2F2;
     --off-white: #FDF8FF;
     --font-dark: #3A2394;
@@ -11,6 +12,7 @@
 body {
     background-color: var(--base-light);
     box-sizing: border-box;
+    font-family: 'Baloo Da 2';
     height: 100vh;
     width: 100vw;
 }
@@ -22,6 +24,17 @@ html {
 *, *::after, *::before {
     box-sizing: inherit;
     margin: 0;
+}
+
+fieldset {
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 0;
+
+    & > label:first-child {
+        display: block;
+    }
 }
 
 #app {
@@ -36,5 +49,24 @@ html {
     &--dark { 
         margin-right: 5rem;
      }
-    &--light { fill: var(--font-light); }
 }
+
+.subpage__header {
+    font-size: 6rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.input {
+    background-color: var(--off-white);
+    border: 2px solid var(--light-pink);
+    border-radius: 3px;
+    color: var(--font-dark);
+    font-size: 4rem;
+    padding: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+

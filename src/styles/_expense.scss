@@ -38,19 +38,3 @@
         height: 5rem;
     }
 }
-
-.expense-category {
-    border-radius: 20px;
-    color: var(--off-white);
-    display: inline-block;
-    line-height: 4rem;
-    padding: 1rem 3rem;
-
-    &--groceries { background-color: #0185FF; }
-    &--drugstore { background-color: #04CABE; }
-    &--goouts { background-color: #048339; }
-    &--gifts { background-color: #a03b9b; }
-    &--alcohol { background-color: #3139a8; }
-    &--home { background-color: #FFC701; }
-    &--fuel { background-color: #936032; }   
-}

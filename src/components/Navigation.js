@@ -4,7 +4,6 @@ import UserIcon from '../../images/user.svg';
 import ChartIcon from '../../images/bar-chart.svg';
 import AddIcon from '../../images/add.svg';
 
-
 const Navigation = () => {
     return (
         <nav className='nav-container'>

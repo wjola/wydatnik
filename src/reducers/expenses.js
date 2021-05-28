@@ -5,7 +5,7 @@ const defaultExpenses = [
     {
         id: 1,
         amount: 456.78,
-        category: 'home',
+        category: 'car',
         date: moment(325987982359),
         details: 'Kwiatki w Castoramie'
     },
@@ -23,6 +23,16 @@ const defaultExpenses = [
         date: moment(12487489390),
         details: 'Rossmann'
     }
+];
+
+export const categoriesData = [
+    { name: 'groceries', displayedName: 'Spożywcze', colorClass: 'blue'},
+    { name: 'alcohol', displayedName: 'Alkohol', colorClass: 'red'},
+    { name: 'drugstore', displayedName: 'Chemia', colorClass: 'turquise'},
+    { name: 'home', displayedName: 'Dom', colorClass: 'yellow'},
+    { name: 'gifts', displayedName: 'Prezenty', colorClass: 'purple'},
+    { name: 'goouts', displayedName: 'Wyjścia', colorClass: 'orange'},
+    { name: 'car', displayedName: 'Samochód', colorClass: 'brown'}
 ];
 
 const expensesReducer = (state = defaultExpenses, action) => {
