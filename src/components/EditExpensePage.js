@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
+import Header from './Header';
 
 const EditExpensePage = ({ expense }) => {
-    return (
-        <>
-            <h2>Edytuj dane o wydatku</h2>
-            <ExpenseForm expense={expense}
-            />
-        </>
-    );
+    return (<>
+        <Header />
+        <div className='subpage__body'>
+            <h2 className='subpage__header'>Edytuj dane o wydatku:</h2>
+            <ExpenseForm expense={expense}/>
+        </div>
+    </>);
 }
 
 const mapStateToProps = (state, props) => {
-    console.log(props.match.params.id);
-
     return {
-        expense: state.find((expense) => {
+        expense: state.expenses.find((expense) => {
             return expense.id === parseInt(props.match.params.id);
         })
     }

@@ -1,0 +1,15 @@
+.form-element {
+    margin-bottom: 4rem;
+
+    &__details {
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: 4.5rem;
+        width: 100%;
+    }
+}
+
+option {
+    font-size: 1.5rem;
+    padding: 0;
+}

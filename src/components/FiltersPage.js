@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { DateRangePicker } from 'react-dates';
+// import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import Category from './Category';
 import Header from './Header';
@@ -59,12 +59,12 @@ const FiltersPage = (props) => {
     }
 
     return (
-        <div>
+        <>
             <Header />
-            <div className='subpage__body'>
+            <form className='subpage__body'>
                 <h2 className='subpage__header'>Wybierz filtry</h2>
                 <fieldset className='filters__criterion'>
-                    <legend className='paragraph--wide'>Podaj zakres kwot:</legend>
+                    <legend>Podaj zakres kwot:</legend>
                     <input
                         className='input filters__input'
                         type='number'
@@ -122,7 +122,7 @@ const FiltersPage = (props) => {
                 <div className='filters__criterion'>
                     <fieldset className='date-picker'>
                         <label>Wybierz zakres dat:</label>
-                        <DateRangePicker
+                        {/* <DateRangePicker
                             daySize={100}
                             startDate={props.filters.startDate}
                             startDateId="startDateId"
@@ -135,7 +135,7 @@ const FiltersPage = (props) => {
                             focusedInput={calendarFocus}
                             onFocusChange={focusedInput => setCalendarFocus(focusedInput)}
                             numberOfMonths={1}
-                        />
+                        /> */}
                     </fieldset>
                 </div>
                 <div className='filters__criterion'>
@@ -175,9 +175,9 @@ const FiltersPage = (props) => {
                         Zastosuj
                     </button>
                 </div>
-            </div>
+            </form>
             <Navigation />
-        </div>
+        </>
     );
 }
 
