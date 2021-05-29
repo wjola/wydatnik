@@ -57,6 +57,13 @@ fieldset {
     margin-bottom: 2rem;
 }
 
+.subpage__body {
+    color: var(--font-dark);
+    flex: 1 1 auto;
+    font-size: 4rem;
+    padding: 4rem 4rem var(--nav-height);
+}
+
 .input {
     background-color: var(--off-white);
     border: 2px solid var(--light-pink);
