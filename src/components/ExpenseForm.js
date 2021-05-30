@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { SingleDatePicker } from 'react-dates';
+import { DatePicker } from '@material-ui/pickers';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { addExpense, editExpense } from '../actions/expenses';
@@ -14,6 +14,10 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
     const [details, setDetails] = useState(expense.details || '');
     const [calendarFocused, setCalendarFocused] = useState(false);
     const history = useHistory();
+
+    useEffect(() => {
+        console.log(date);
+    }, [date]);
 
     const onClick = (e) => {
         e.preventDefault();
@@ -79,14 +83,9 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
             </fieldset>
             <fieldset className='form-element'>
                 <label htmlFor='date'>Wybierz datę</label>
-                {/* <SingleDatePicker id='date'
-                                date={date}
-                                onDateChange={date => setDate(date)}
-                                focused={calendarFocused}
-                                onFocusChange={({ focused }) => setCalendarFocused(focused)}
-                                numberOfMonths={1}
-                                isOutsideRange={() => false}
-                /> */}
+                {
+                    <DatePicker value={date} onChange={setDate} />
+                }
             </fieldset>
             <fieldset className='form-element'>
                 <label htmlFor='category'>Wybierz kategorię</label>
