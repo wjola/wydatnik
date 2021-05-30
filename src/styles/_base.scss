@@ -7,6 +7,7 @@
     --off-white: #FDF8FF;
     --font-dark: #3A2394;
     --nav-height: 13vh;
+    --outline: #17B6C0;
 }
 
 body {
@@ -46,9 +47,9 @@ fieldset {
 .icon {
     height: 100%;
 
-    &--dark { 
+    &--dark {
         margin-right: 5rem;
-     }
+    }
 }
 
 .subpage__header {
@@ -66,14 +67,49 @@ fieldset {
 
 .input {
     background-color: var(--off-white);
-    border: 2px solid var(--light-pink);
-    border-radius: 3px;
+    border: none;
+    border-radius: 2rem;
     color: var(--font-dark);
-    font-size: 4rem;
-    padding: 2rem;
+    font-family: inherit;
+    outline: none;
+    padding: 2rem 4rem;
 }
 
 .hidden {
     display: none;
 }
 
+.button {
+    align-items: center;
+    background-color: transparent;
+    border-radius: 15rem;
+    border: none;
+    display: flex;
+    font-family: inherit;
+    font-size: 4rem;
+    height: 10rem;
+    outline: none;
+    padding: 0 6rem;
+    text-decoration: none;
+
+    &--full {
+        background-color: var(--font-dark);
+        color: var(--off-white);
+    }
+
+    &--dark {
+        border: 2px solid var(--font-dark);
+        color: var(--font-dark);
+    }
+
+    &--light {
+        border: 2px solid var(--off-white);
+        color: var(--off-white);
+        transition: box-shadow .3s, font-size .3s;
+
+        &:hover {
+            box-shadow: 0 0 5px 1px var(--off-white);
+            font-size: 4.1rem;
+        }
+    }
+}

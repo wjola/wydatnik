@@ -1,0 +1,78 @@
+.login__body {
+    align-items: center;
+    background-image: url(../../images/login-background.svg), radial-gradient(rgb(137, 30, 187) 20%,rgb(34, 31, 135) 99.99%, rgb(34, 31, 135) 100%),;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--off-white);
+    display: flex;
+    font-size: 5rem;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+.login__header {
+    align-self: center;
+    font-weight: 200;
+    margin-bottom: 5rem;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+}
+
+.login__input {
+    background-color: var(--off-white);
+    border-radius: 10rem;
+    font-size: 4.5rem;
+    width: 100%;
+
+    &:focus + .login__label,
+    &:not(:placeholder-shown) + .login__label {
+        color: var(--off-white);
+        transform: translateY(-55%);
+    }
+
+    &:focus {
+        box-shadow: 0 0 9px 1px magenta;
+    }
+}
+
+.login__button {
+    align-self: center;
+    margin-top: 5rem;
+    padding: 2rem 15rem;
+}
+
+.login__label {
+    bottom: 50%;
+    color: var(--font-dark);
+    font-size: 4.5rem;
+    left: 4rem;
+    opacity: 0.5;
+    position: absolute;
+    transform: translateY(50%);
+    transition: transform .3s;
+}
+
+.input-container {
+    margin-bottom: 6.5rem;
+    position: relative;
+}
+
+.password__icon {
+    border: none;
+    bottom: 50%;
+    display: inline-block;
+    opacity: 0.5;
+    height: 5rem;
+    position: absolute;
+    right: 3rem;
+    transform: translateY(50%);
+
+    &[disabled] {
+        display: none;
+    }
+}

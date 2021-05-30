@@ -111,13 +111,13 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
             </fieldset>
             <div className='filters__button-container'>
                 <button 
-                    className='filter-button filter-button--light'
+                    className='button button--dark filter-button'
                     onClick={handleCancelForm}
                 >
                     Anuluj
                 </button>
                 <button
-                    className='filter-button filter-button--dark'
+                    className='button button--full filter-button'
                     onClick={onClick}
                 >
                     {isExpenseEdited ? `Zapisz` : `Dodaj`}

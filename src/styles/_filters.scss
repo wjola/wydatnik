@@ -1,26 +1,6 @@
 .filter-button {
-    align-items: center;
-    border-radius: 15rem;
-    display: flex;
-    font-family: inherit;
-    font-size: 4rem;
-    height: 10rem;
-    padding: 0 6rem;
-    text-decoration: none;
-
     & + & {
         margin-left: 2rem;
-    }
-
-    &--dark {
-        background-color: var(--font-dark);
-        color: var(--off-white);
-    }
-
-    &--light {
-        background-color: transparent;
-        border: 2px solid var(--font-dark);
-        color: var(--font-dark);
     }
 
     & img {
@@ -49,6 +29,8 @@
 }
 
 .filters__input {
+    border: 2px solid var(--light-pink);
+    font-size: 4rem;
     width: 45%;
 
     & + & {

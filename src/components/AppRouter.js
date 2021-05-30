@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import MainPage from './MainPage';
+import SignInPage from './SignInPage';
+import SignUpPage from './SignUpPage';
 import EditExpensePage from './EditExpensePage';
 import AddExpense from './AddExpense';
 import FiltersPage from './FiltersPage';
@@ -13,6 +15,8 @@ const AppRouter = () => {
                 <Route path='/edit/:id' component={EditExpensePage} />
                 <Route path='/add' component={AddExpense} />
                 <Route path='/filters' component={FiltersPage} />
+                <Route path='/signin' component={SignInPage} />
+                <Route path='/signup' component={SignUpPage} />
             </Switch>
         </BrowserRouter>
     );

@@ -81,7 +81,7 @@ const FiltersList = ({ filters }) => {
         <div className='filters-container'>
             <div className='filters__button-container'>
                 {filtersActive && <button
-                                      className='filter-button filter-button--light'
+                                      className='button button--dark filter-button'
                                       onClick={clearFilters}
                                   >
                                       Resetuj filtry
@@ -89,7 +89,7 @@ const FiltersList = ({ filters }) => {
                 }
                 <Link
                     to='/filters'
-                    className='filter-button filter-button--dark'
+                    className='button button--full filter-button'
                 >
                     <img src={FilterIcon} className='icon icon--light' />
                     {filtersActive ? 'Zmień filtry' : 'Filtruj'}
