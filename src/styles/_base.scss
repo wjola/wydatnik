@@ -6,7 +6,7 @@
     --purple--light: #F4F2F2;
     --off-white: #FDF8FF;
     --font-dark: #3A2394;
-    --nav-height: 13vh;
+    --nav-height: 20rem;
     --outline: #17B6C0;
 }
 
@@ -15,11 +15,18 @@ body {
     box-sizing: border-box;
     font-family: 'Baloo Da 2';
     height: 100vh;
+    min-width: 300px;
     width: 100vw;
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 50%;
+}
+
+@media (min-width: 600px) {
+    html {
+        font-size: 62%;
+    }
 }
 
 *, *::after, *::before {
@@ -45,34 +52,36 @@ fieldset {
 }
 
 .icon {
+    background-color: transparent;
+    border: none;
     height: 100%;
 
     &--dark {
-        margin-right: 5rem;
+        margin-right: 1.5rem;
     }
 }
 
 .subpage__header {
-    font-size: 6rem;
+    font-size: 2.5rem;
     font-weight: 400;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .subpage__body {
     color: var(--font-dark);
     flex: 1 1 auto;
-    font-size: 4rem;
-    padding: 4rem 4rem var(--nav-height);
+    font-size: 2rem;
+    padding: 2rem 2rem var(--nav-height);
 }
 
 .input {
     background-color: var(--off-white);
     border: none;
-    border-radius: 2rem;
+    border-radius: 3px;
     color: var(--font-dark);
     font-family: inherit;
     outline: none;
-    padding: 2rem 4rem;
+    padding: .5rem 1.5rem;
 }
 
 .hidden {
@@ -86,10 +95,9 @@ fieldset {
     border: none;
     display: flex;
     font-family: inherit;
-    font-size: 4rem;
-    height: 10rem;
+    font-size: 2rem;
     outline: none;
-    padding: 0 6rem;
+    padding: .5rem 3rem;
     text-decoration: none;
 
     &--full {
@@ -98,18 +106,18 @@ fieldset {
     }
 
     &--dark {
-        border: 2px solid var(--font-dark);
+        border: 1px solid var(--font-dark);
         color: var(--font-dark);
     }
 
     &--light {
-        border: 2px solid var(--off-white);
+        border: 1px solid var(--off-white);
         color: var(--off-white);
         transition: box-shadow .3s, font-size .3s;
 
         &:hover {
             box-shadow: 0 0 5px 1px var(--off-white);
-            font-size: 4.1rem;
+            font-size: 2.1rem;
         }
     }
 }

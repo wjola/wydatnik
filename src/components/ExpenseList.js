@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { removeExpense } from '../actions/expenses';
 import Expense from './Expense';
 import FiltersList from './FiltersList';
 
 const ExpenseList = (props) => {
+
     return (
         <div className='expense-list-container'>
             <FiltersList />

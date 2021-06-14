@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import Category from './Category';
 import EditIcon from '../../images/edit.svg';
 import DeleteIcon from '../../images/delete.svg';
+import { removeExpense } from '../actions/expenses';
 
-const Expense = ({ id, amount = 0, category = '', date = moment(), details = '' }) => {
+const Expense = ({ id, amount = 0, category = '', date = moment(), details = '', removeExpense}) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -22,7 +24,9 @@ const Expense = ({ id, amount = 0, category = '', date = moment(), details = '' 
             <div className={`expense-item--${expanded ? 'expanded' : 'hidden'}`}>
                 <p className={'expense-item__details'}>{details}</p>
                 <div className='expense-item__icon-container'>
-                    <img src={DeleteIcon} className='icon icon--dark' />
+                    <button className='icon' onClick={e => removeExpense(id)}>
+                        <img src={DeleteIcon} className='icon icon--dark' />
+                    </button>
                     <Link to={`/edit/${id}`}>
                         <img src={EditIcon} className='icon icon--dark' />
                     </Link>
@@ -32,4 +36,10 @@ const Expense = ({ id, amount = 0, category = '', date = moment(), details = '' 
     );
 }
 
-export default Expense;
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        removeExpense: (id) => dispatch(removeExpense(id))
+    });
+}
+
+export default connect(undefined, mapDispatchToProps)(Expense);

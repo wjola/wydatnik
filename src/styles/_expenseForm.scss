@@ -1,10 +1,11 @@
 .form-element {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 
     &__details {
+        border: 1px solid var(--light-pink);
         font-family: inherit;
         font-weight: inherit;
-        line-height: 4.5rem;
+        line-height: 2.5rem;
         width: 100%;
     }
 }

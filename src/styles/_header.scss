@@ -5,13 +5,12 @@
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    height: var(--nav-height);
     justify-content: center;
-    padding: 4rem;
+    padding: 2rem 3rem;
 }
 
 .title {
     color: var(--purple--light);
     font-family: 'Roboto Slab';
-    font-size: 10rem;
+    font-size: 5rem;
 }

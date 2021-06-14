@@ -1,20 +1,20 @@
 .expense-category {
+    align-items: center;
     border: none;
     border-radius: 20px;
     box-shadow: none;
     color: var(--off-white);
     cursor: default;
-    display: flex;
+    display: inline-flex;
     font-family: inherit;
     font-size: inherit;
-    align-items: center;
-    line-height: 4rem;
+    line-height: 2rem;
     margin-bottom: 0;
-    padding: 1rem 3rem;
+    padding: .5rem 2rem;
 
     &--clickable {
         cursor: pointer;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 
     &--groceries { background-color: #0185FF; }
@@ -26,17 +26,17 @@
     &--car { background-color: #936032; }
 
     & > span {
-        height: 4rem;
+        height: 2rem;
     }
 }
 
 .category__checkbox {
     display: inline-block;
-    margin-right: 2rem;
+    margin-right: 1rem;
 }
 
 .category__icon {
-    height: 4rem;
-    margin-left: 2rem;
-    width: 4rem;
+    height: 2rem;
+    margin-left: 1.5rem;
+    width: 2rem;
 }
