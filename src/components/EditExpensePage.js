@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import ExpenseForm from './ExpenseForm';
 import Header from './Header';
 
 const EditExpensePage = ({ expense }) => {
+    console.log(expense);
     return (<>
         <Header />
         <div className='subpage__body'>
@@ -16,7 +18,7 @@ const EditExpensePage = ({ expense }) => {
 const mapStateToProps = (state, props) => {
     return {
         expense: state.expenses.find((expense) => {
-            return expense.id === parseInt(props.match.params.id);
+            return expense.id === props.match.params.id;
         })
     }
 }

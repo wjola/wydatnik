@@ -3,21 +3,22 @@ import { connect } from 'react-redux';
 import { DatePicker } from '@material-ui/pickers';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { addExpense, editExpense } from '../actions/expenses';
+import { addExpenseAsync, editExpenseAsync } from '../actions/expenses';
 
 const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
+    console.log(expense);
     const isExpenseEdited = !(Object.keys(expense).length === 0);
 
     const [amount, setAmount] = useState(expense.amount || '');
-    const [date, setDate] = useState(expense.date || moment());
-    const [category, setCategory] = useState(expense.category || '');
+    const [date, setDate] = useState(expense.date || moment().format('D/MM/YYYY'));
+    const [category, setCategory] = useState(expense.category || 'groceries');
     const [details, setDetails] = useState(expense.details || '');
     const [calendarFocused, setCalendarFocused] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        console.log(date);
-    }, [date]);
+        console.log(category);
+    }, [category]);
 
     const onClick = (e) => {
         e.preventDefault();
@@ -57,7 +58,7 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
 
     const clearForm = () => {
         setAmount('');
-        setCategory('');
+        setCategory('groceries');
         setDetails('');
         setDate(moment());
     }
@@ -128,8 +129,8 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addExpense: (expense) => dispatch(addExpense(expense)),
-    editExpense: (id, updates) => dispatch(editExpense(id, updates))
+    addExpense: (expense) => dispatch(addExpenseAsync(expense)),
+    editExpense: (id, updates) => dispatch(editExpenseAsync(id, updates))
 })
 
 export default connect(undefined, mapDispatchToProps)(ExpenseForm);

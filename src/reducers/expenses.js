@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
+import firebase from 'firebase';
+import database from '../firebase/firebase';
 
 const defaultExpenses = [
     {
@@ -35,15 +36,14 @@ export const categoriesData = [
     { name: 'car', displayedName: 'Samochód', colorClass: 'brown'}
 ];
 
-const expensesReducer = (state = defaultExpenses, action) => {
+const expensesReducer = (state = [], action) => {
 
     switch(action.type) {
         case 'ADD_EXPENSE':
             return [
                 ...state,
                 {
-                    ...action.expense,
-                    id: uuidv4()
+                    ...action.expense
                 }
             ];
         case 'EDIT_EXPENSE':
@@ -63,6 +63,8 @@ const expensesReducer = (state = defaultExpenses, action) => {
                     return expense;
                 }
             });
+        case 'SET_EXPENSES':
+            return action.expenses;
         default:
             return state;
     }

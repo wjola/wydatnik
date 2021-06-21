@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions/expenses';
 import Expense from './Expense';
 import FiltersList from './FiltersList';
+import { setExpensesAsync } from '../actions/expenses';
 
-const ExpenseList = (props) => {
+const ExpenseList = ({ expenses, setExpenses }) => {
+
+    useEffect(() => {
+        console.log("start");
+        setExpenses();
+    }, []);
 
     return (
         <div className='expense-list-container'>
             <FiltersList />
             <p>Ostatnie wydatki:</p>
-            {props.expenses.map((expense) => {
+            {expenses.map((expense) => {
                 return (
                     <Expense
                         id={expense.id}
-                        key={expense.amount}
+                        key={expense.id}
                         amount={expense.amount}
                         category={expense.category}
                         date={expense.date}
@@ -27,5 +32,8 @@ const ExpenseList = (props) => {
 }
 
 const mapStateToProps = (state) => ({ expenses: state.expenses });
+const mapDispatchToProps = (dispatch) => ({
+        setExpenses: () => dispatch(setExpensesAsync())
+});
 
-export default connect(mapStateToProps)(ExpenseList);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
