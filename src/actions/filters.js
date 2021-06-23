@@ -51,3 +51,9 @@ export const sortByDate = () => {
         type: 'SORT_BY_DATE'
     }
 }
+
+export const resetFilters = () => {
+    return {
+        type: 'RESET_FILTERS'
+    }
+}

@@ -51,6 +51,10 @@ const filtersReducer = (state = defaultFilters, action) => {
                 ...state,
                 sortBy: 'date'
             };
+        case 'RESET_FILTERS':
+            return {
+                ...defaultFilters
+            }
         default:
             return state;
     }

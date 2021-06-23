@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import FilterIcon from '../../images/filter.svg';
 import { defaultFilters } from '../reducers/filters';
 import { categoriesData } from '../reducers/expenses';
+import { resetFilters } from '../actions/filters';
 
-const FiltersList = ({ filters }) => {
+const FiltersList = ({ filters, resetFilters }) => {
     const [filtersActive, setFiltersActive] = useState(false);
 
     useEffect(() => {
@@ -32,6 +33,7 @@ const FiltersList = ({ filters }) => {
             filters[property] = defaultFilters[property];
         }
         setFiltersActive(false);
+        resetFilters();
     }
 
     const getCategoryDisplayedName = (name) => {
@@ -114,4 +116,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(FiltersList);
+const mapDispatchToProps = {
+    resetFilters
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FiltersList);

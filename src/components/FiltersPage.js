@@ -196,8 +196,7 @@ const mapDispatchToProps = (dispatch) => {
         sortByDate: () => dispatch(sortByDate()),
         sortByAmount: () => dispatch(sortByAmount()),
         includeCategory: (category) => dispatch(includeCategory(category)),
-        excludeCategory: (category) => dispatch(excludeCategory(category))
-    }
+        excludeCategory: (category) => dispatch(excludeCategory(category))    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FiltersPage);
