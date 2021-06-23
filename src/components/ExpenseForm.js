@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { DatePicker } from '@material-ui/pickers';
+import { SingleDatePicker } from 'react-dates';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 import { addExpenseAsync, editExpenseAsync } from '../actions/expenses';
 
 const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
@@ -85,7 +86,15 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
             <fieldset className='form-element'>
                 <label htmlFor='date'>Wybierz datę</label>
                 {
-                    <DatePicker value={date} onChange={setDate} />
+                    <SingleDatePicker
+                        date={moment(date, 'D/MM/YYYY')}
+                        onDateChange={date => setDate(date.format('D/MM/YYYY'))}
+                        focused={calendarFocused}
+                        onFocusChange={({ focused }) => setCalendarFocused(focused)}
+                        id={uuidv4()}
+                        numberOfMonths={1}
+                        isOutsideRange={() => false}
+                    />
                 }
             </fieldset>
             <fieldset className='form-element'>

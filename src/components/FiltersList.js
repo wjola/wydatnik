@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import FilterIcon from '../../images/filter.svg';
 import { defaultFilters } from '../reducers/filters';
 import { categoriesData } from '../reducers/expenses';
@@ -53,10 +54,10 @@ const FiltersList = ({ filters, resetFilters }) => {
         let datesString = ``;
 
         if (isFilterSet('startDate')) {
-            datesString += `od ${filters.startDate}`;
+            datesString += `od ${filters.startDate.format('D/MM/YYYY')}`;
         }
         if (isFilterSet('endDate')) {
-            datesString += ` do ${filters.endDate}`
+            datesString += ` do ${filters.endDate.format('D/MM/YYYY')}`
         }
 
         return (datesString.length > 0 && <p>Data: {datesString} </p>);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { DateRangePicker } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import Category from './Category';
 import Header from './Header';
@@ -122,8 +122,7 @@ const FiltersPage = (props) => {
                 <div className='filters__criterion'>
                     <fieldset className='date-picker'>
                         <label>Wybierz zakres dat:</label>
-                        {/* <DateRangePicker
-                            daySize={100}
+                        <DateRangePicker
                             startDate={props.filters.startDate}
                             startDateId="startDateId"
                             endDate={props.filters.endDate}
@@ -135,7 +134,8 @@ const FiltersPage = (props) => {
                             focusedInput={calendarFocus}
                             onFocusChange={focusedInput => setCalendarFocus(focusedInput)}
                             numberOfMonths={1}
-                        /> */}
+                            isOutsideRange={() => false}
+                        />
                     </fieldset>
                 </div>
                 <div className='filters__criterion'>
