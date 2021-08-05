@@ -61,7 +61,7 @@ const FiltersPage = (props) => {
     return (
         <>
             <Header />
-            <form className='subpage__body'>
+            <form className='subpage__body container'>
                 <h2 className='subpage__header'>Wybierz filtry</h2>
                 <fieldset className='filters__criterion'>
                     <legend>Podaj zakres kwot:</legend>

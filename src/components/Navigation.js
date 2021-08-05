@@ -6,7 +6,7 @@ import AddIcon from '../../images/add.svg';
 
 const Navigation = () => {
     return (
-        <nav className='nav-container'>
+        <nav className='nav-container container'>
             <NavLink to='/' className='nav-element'>
                 <img src={UserIcon} className='icon icon--light' />
             </NavLink>

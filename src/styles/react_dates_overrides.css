@@ -1,0 +1,57 @@
+.CalendarMonth_caption,
+.DayPicker_weekHeader_ul,
+.CalendarDay {
+    color: var(--font-dark);
+}
+
+.CalendarDay__selected_span {
+  background: rgba(#C29CD4, 0.6);
+  color: var(--off-white);
+  border: 1px solid var(--off-white);
+}
+
+.CalendarDay__selected {
+  background: var(--base-navy);
+  color: var(--off-white);
+  border: 1px solid var(--light-pink);
+}
+
+.CalendarDay__selected:hover {
+  background: var(--gradient-pink);
+  color: var(--off-white);
+  border: 1px solid var(--light-pink);
+}
+
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+  background: var(--font-dark);
+}
+
+.DateInput_input {
+    border-bottom: 2px solid var(--light-pink);
+    color: var(--font-dark);
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.SingleDatePickerInput__withBorder {
+  border: 1px solid var(--light-pink);
+  border-radius: 3px;
+}
+
+.SingleDatePicker_picker {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.CalendarDay {
+    border: 1px solid var(--light-pink);
+}
+
+.DayPickerNavigation_button {
+  border: 1px solid var(--light-pink);
+}
+
+.DayPickerNavigation_svg__horizontal {
+  fill: var(--font-dark);
+}

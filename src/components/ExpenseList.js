@@ -16,9 +16,9 @@ const ExpenseList = ({ expenses, setExpenses }) => {
     });
 
     return (
-        <div className='expense-list-container'>
+        <div className='expense-list-container container'>
             <FiltersList />
-            <p>Ostatnie wydatki:</p>
+            <h3 className='expense-list__header'>Ostatnie wydatki:</h3>
             {expenses.map((expense) => {
                 return (
                     <Expense

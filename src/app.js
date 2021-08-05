@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './styles/main.scss';
 import 'react-dates/lib/css/_datepicker.css';
+import './styles/react_dates_overrides.css';
 import AppRouter from './components/AppRouter';
 import configureStore from './store/store';
 

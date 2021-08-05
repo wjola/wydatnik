@@ -8,7 +8,7 @@ const EditExpensePage = ({ expense }) => {
     console.log(expense);
     return (<>
         <Header />
-        <div className='subpage__body'>
+        <div className='subpage__body container'>
             <h2 className='subpage__header'>Edytuj dane o wydatku:</h2>
             <ExpenseForm expense={expense}/>
         </div>

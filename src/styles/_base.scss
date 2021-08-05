@@ -25,7 +25,7 @@ html {
 
 @media (min-width: 600px) {
     html {
-        font-size: 62%;
+        // font-size: 62%;
     }
 }
 
@@ -72,6 +72,19 @@ fieldset {
     flex: 1 1 auto;
     font-size: 2rem;
     padding: 2rem 2rem var(--nav-height);
+}
+
+@media (min-width: 400px) {
+    .container {
+        margin: 0 3rem;
+    }
+}
+
+@media (min-width: 1100px) {
+    .container {
+        margin: 0 auto;
+        width: 1100px;
+    }
 }
 
 .input {

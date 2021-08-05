@@ -1,6 +1,21 @@
 .expense-list-container {
     color: var(--font-dark);
-    flex: 1 1 auto;
+    display: grid;
     font-size: 2rem;
     padding: 2rem 2rem var(--nav-height);
+    row-gap: 1.5rem;
+
+    @media (min-width: 600px) {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1.5rem;
+    }
+
+    @media (min-width: 800px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.expense-list__header {
+    font-weight: 100;
+    grid-column: 1 / -1;
 }
