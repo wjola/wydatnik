@@ -13,6 +13,10 @@ const PieChart = ({ data }) => {
     useEffect(() => {
         drawChart();
     }, []);
+
+    useEffect(() => {
+        drawChart();
+    }, [data]);
     
     function drawChart() {
         const colorScale = d3.scaleSequential()      
