@@ -35,7 +35,16 @@ module.exports = {
               loader: 'file-loader'
             },
           ],
+        }, {
+          test: /\.tsv$/,
+          loader: 'tsv-loader',
+          options: {
+            dynamicTyping: true,
+            header: true,
+            skipEmptyLines: true
+          }
         }
+
       ]
     },
     devServer: {

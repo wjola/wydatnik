@@ -40,6 +40,7 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
             }
 
             clearForm();
+            history.push('/');
         }
     }
 

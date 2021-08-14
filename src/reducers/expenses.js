@@ -33,7 +33,8 @@ export const categoriesData = [
     { name: 'home', displayedName: 'Dom', colorClass: 'yellow'},
     { name: 'gifts', displayedName: 'Prezenty', colorClass: 'purple'},
     { name: 'goouts', displayedName: 'Wyjścia', colorClass: 'orange'},
-    { name: 'car', displayedName: 'Samochód', colorClass: 'brown'}
+    { name: 'car', displayedName: 'Samochód', colorClass: 'brown'},
+    { name: 'flowers', displayedName: 'Kwiaty', colorClass: 'green'}
 ];
 
 const expensesReducer = (state = [], action) => {

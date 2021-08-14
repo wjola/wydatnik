@@ -7,6 +7,7 @@ import EditExpensePage from './EditExpensePage';
 import AddExpense from './AddExpense';
 import FiltersPage from './FiltersPage';
 import HomePage from './HomePage';
+import ChartsPage from './ChartsPage';
 
 const AppRouter = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
                 <Route path='/signin' component={SignInPage} />
                 <Route path='/signup' component={SignUpPage} />
                 <Route path='/home' component={HomePage} />
+                <Route path='/charts' component={ChartsPage} />
             </Switch>
         </BrowserRouter>
     );

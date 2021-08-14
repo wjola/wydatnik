@@ -5,7 +5,6 @@ import ExpenseForm from './ExpenseForm';
 import Header from './Header';
 
 const EditExpensePage = ({ expense }) => {
-    console.log(expense);
     return (<>
         <Header />
         <div className='subpage__body container'>

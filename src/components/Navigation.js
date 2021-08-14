@@ -10,7 +10,7 @@ const Navigation = () => {
             <NavLink to='/' className='nav-element'>
                 <img src={UserIcon} className='icon icon--light' />
             </NavLink>
-            <NavLink to='/' className='nav-element'>
+            <NavLink to='/charts' className='nav-element'>
                 <img src={ChartIcon} className='icon icon--light' />
             </NavLink>
             <NavLink to='/add' className='nav-element'>
