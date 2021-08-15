@@ -13,7 +13,7 @@ const LineChart = ({ data }) => {
     }, []);
 
     const parseDate = d3.timeParse("%m/%Y");
-    console.log("nono",data);
+
     const getX = d3
         .scaleTime()
         .domain(d3.extent(data, (d) => parseDate(d[0])))
@@ -39,14 +39,7 @@ const LineChart = ({ data }) => {
         .line()
         .x((d) => getX(parseDate(d[0])))
         .y((d) => getY(Number(d[1][0][1])))
-        .curve(d3.curveMonotoneX)(data);
-
-    const areaPath = d3
-        .area()
-        .x((d) => getX(parseDate(d[0])))
-        .y0((d) => getY(Number(d[1][0][1])))
-        .y1(() => getY(yMinValue - 1))
-        .curve(d3.curveMonotoneX)(data);
+        .curve(d3.curveLinear)(data);
 
     return (<div>
         <h2>Porównanie miesięcznych wydatków w kategorii w czasie</h2>
@@ -54,8 +47,8 @@ const LineChart = ({ data }) => {
             <svg
                 viewBox={`-50 -50 ${width + margin.left + margin.right} 
                                   ${height + margin.top + margin.bottom}`}
-            // onMouseMove={handleMouseMove}
-            // onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
             >
                 <g className="axis" ref={getYAxis} />
                 <g
@@ -63,8 +56,6 @@ const LineChart = ({ data }) => {
                     ref={getXAxis}
                     transform={`translate(0,${height})`}
                 />
-
-                <path fill={color} d={areaPath} opacity={0.3} />
                 <path strokeWidth={3} fill="none" stroke={color} d={linePath} />
 
                 <text
@@ -72,11 +63,6 @@ const LineChart = ({ data }) => {
                     x={0 - height / 2} y={0 - margin.left} dy="1em">
                     {"PLN"}
                 </text>
-
-                {/* <text
-                    x={width / 2} y={0 - margin.top / 2} textAnchor="middle" >
-                    {"USD to RUB Exchange Rates, 2020"}
-                </text> */}
 
                 {data.map(item => {
                     <g key={item[0]}>
@@ -86,7 +72,7 @@ const LineChart = ({ data }) => {
                             y={getY(Number(item[1][0][1]))}
                             textAnchor="middle"
                         >
-                        
+                            Huhu
                         </text>
 
                         <circle

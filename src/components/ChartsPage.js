@@ -26,7 +26,6 @@ const ChartsPage = ({ expenses }) => {
 
     useEffect(() => {
         getDataForLineChart();
-        console.log(lineChartData);
     }, [lineChartCategories]);
 
     const getDataForPieChart = () => {
@@ -62,27 +61,21 @@ const ChartsPage = ({ expenses }) => {
             } else {
                 return false;
             }
+        }).sort((exp1, exp2) => {
+            if (moment(exp1.date, 'DD/MM/YYYY').isBefore(moment(exp2.date, 'DD/MM/YYYY'))) {
+                return -1;
+            } else if (moment(exp1.date, 'DD/MM/YYYY').isAfter(moment(exp2.date, 'DD/MM/YYYY'))) {
+                return 1;
+            } else {
+                return 0;
+            }
         });
+
         console.log(filteredExpenses);
         setLineChartData(d3.rollups(filteredExpenses,
                  v => v.reduce((acc, curr) => acc + Number.parseFloat(curr.amount), 0),
                  d => d.date.substring(d.date.indexOf('\/')+1),
                  d => d.category));
-
-    //     {data.forEach((value, key) => {
-    //     console.log('item', key, value);
-    //     data2.push({ 
-    //         date: key,
-    //         categories: []
-    //     });
-    //     value.forEach((value, key) => {
-    //         data2[data2.length-1].categories.push({
-    //             categoryName: key,
-    //             value: Array.from(value)
-    //         });
-    //         console.log("x", key, Array.from(value));
-    //     })
-    // })}
     }
 
     return (<div>
