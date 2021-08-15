@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { DateRangePicker } from 'react-dates';
-import moment from 'moment';
-import Category from './Category';
 import Header from './Header';
 import Navigation from './Navigation';
-import { categoriesData } from '../reducers/expenses';
+import FormInputDateRange from './FormInputDateRange';
+import FormInputCategory from './FormInputCategory';
 import {
     setAmountFrom,
     setAmountTo,
@@ -20,7 +18,6 @@ import {
 
 const FiltersPage = (props) => {
     const [showAmountError, setShowAmountError] = useState(false);
-    const [calendarFocus, setCalendarFocus] = useState(null);
     const [amountFrom, setAmountFrom] = useState(props.filters.amountFrom);
     const [amountTo, setAmountTo] = useState(props.filters.amountTo);
     const history = useHistory();
@@ -83,60 +80,19 @@ const FiltersPage = (props) => {
                     />
                 </fieldset>
                 <div className='filters__criterion'>
-                    <fieldset className='categories-container'>
-                        <label>Wybierz kategorie:</label>
-                        {
-                            categoriesData.map(category => {
-                                return (
-                                    <div className='category__checkbox' key={category.name}>
-                                        <input
-                                            id={category.name}
-                                            type='checkbox'
-                                            className='hidden'
-                                            name='category'
-                                            value={category.name}
-                                            onChange={
-                                                e => {
-                                                    if(e.target.checked == true) {
-                                                        props.includeCategory(e.target.value);
-                                                    } else {
-                                                        props.excludeCategory(e.target.value);
-                                                    }                                            
-                                                }
-                                            }
-                                            checked={props.filters.categories.includes(category.name)}
-                                        />
-                                        <label htmlFor={category.name}>
-                                            <Category
-                                                category={category.name}                                                
-                                                clickable={true}
-                                                isChosen={props.filters.categories.includes(category.name)}
-                                            />
-                                        </label>
-                                    </div>
-                                )
-                            })
-                        }
-                    </fieldset>
+                    <FormInputCategory
+                        selectedCategories={props.filters.categories}
+                        handleSelectCategory={props.includeCategory}
+                        handleUnselectCategory={props.excludeCategory}
+                    />
                 </div>
                 <div className='filters__criterion'>
-                    <fieldset className='date-picker'>
-                        <label>Wybierz zakres dat:</label>
-                        <DateRangePicker
-                            startDate={props.filters.startDate}
-                            startDateId="startDateId"
-                            endDate={props.filters.endDate}
-                            endDateId="endDateId"
-                            onDatesChange={({ startDate, endDate }) => {
-                                props.setStartDate(startDate.startOf('day'));
-                                props.setEndDate(endDate.startOf('day'));
-                            }}
-                            focusedInput={calendarFocus}
-                            onFocusChange={focusedInput => setCalendarFocus(focusedInput)}
-                            numberOfMonths={1}
-                            isOutsideRange={() => false}
-                        />
-                    </fieldset>
+                    <FormInputDateRange
+                        startDate={props.filters.startDate}
+                        endDate={props.filters.endDate}
+                        setStartDate={props.setStartDate}
+                        setEndDate={props.setEndDate}
+                    />
                 </div>
                 <div className='filters__criterion'>
                     <fieldset>

@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { DateRangePicker } from 'react-dates';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
 import { categoriesData } from '../reducers/expenses';
+import FormInputDateRange from './FormInputDateRange';
+import FormInputCategory from './FormInputCategory';
 
 const ChartsPage = ({ expenses }) => {
     const [pieChartData, setPieChartData] = useState([]);
     const [pieChartDateStart, setPieChartDateStart] = useState(moment().startOf('month'));
     const [pieChartDateEnd, setPieChartDateEnd] = useState(moment().endOf('month'));
-    const [pieChartCalendarFocus, setPieChartCalendarFocus] = useState(null);
+    const [lineChartCategories, setLineChartCategories] = useState([]);
     const [lineChartData, setLineChartData] = useState([]);
     let expensesSumPerMonth = [];
 
     useEffect(() => {
         getDataForPieChart();
+        getDataForLineChart();
     }, []);
 
     useEffect(() => {
-        console.log(pieChartDateStart);
-        console.log(pieChartDateEnd);
         getDataForPieChart();
     }, [pieChartDateStart, pieChartDateEnd]);
+
+    useEffect(() => {
+        getDataForLineChart();
+        console.log(lineChartData);
+    }, [lineChartCategories]);
 
     const getDataForPieChart = () => {
         const filteredExpenses = expenses.filter(d => {
@@ -31,7 +36,6 @@ const ChartsPage = ({ expenses }) => {
             
             return dateFromMatch && dateToMatch;
         });
-        console.log('filtered', filteredExpenses);
     
         expensesSumPerMonth = categoriesData.map(category => {
             return {
@@ -48,35 +52,68 @@ const ChartsPage = ({ expenses }) => {
             return el.amount != 0;
         });
 
-        console.log(expensesSumPerMonth);
-
         setPieChartData(expensesSumPerMonth);
+    }
+
+    const getDataForLineChart = () => {
+        const filteredExpenses = expenses.filter(expense => {
+            if (lineChartCategories.includes(expense.category)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        console.log(filteredExpenses);
+        setLineChartData(d3.rollups(filteredExpenses,
+                 v => v.reduce((acc, curr) => acc + Number.parseFloat(curr.amount), 0),
+                 d => d.date.substring(d.date.indexOf('\/')+1),
+                 d => d.category));
+
+    //     {data.forEach((value, key) => {
+    //     console.log('item', key, value);
+    //     data2.push({ 
+    //         date: key,
+    //         categories: []
+    //     });
+    //     value.forEach((value, key) => {
+    //         data2[data2.length-1].categories.push({
+    //             categoryName: key,
+    //             value: Array.from(value)
+    //         });
+    //         console.log("x", key, Array.from(value));
+    //     })
+    // })}
     }
 
     return (<div>
                 <div>
                     <form>
-                        <fieldset className='date-picker'>
-                            <label>Wybierz zakres dat:</label>
-                            <DateRangePicker
-                                startDate={pieChartDateStart}
-                                startDateId="startDateId"
-                                endDate={pieChartDateEnd}
-                                endDateId="endDateId"
-                                onDatesChange={({ startDate, endDate }) => {
-                                    setPieChartDateStart(startDate.startOf('day'));
-                                    setPieChartDateEnd(endDate.startOf('day'));
-                                }}
-                                focusedInput={pieChartCalendarFocus}
-                                onFocusChange={focusedInput => setPieChartCalendarFocus(focusedInput)}
-                                numberOfMonths={1}
-                                isOutsideRange={() => false}
-                            />
-                        </fieldset>
+                        <FormInputDateRange
+                            startDate={pieChartDateStart}
+                            endDate={pieChartDateEnd}
+                            setStartDate={setPieChartDateStart}
+                            setEndDate={setPieChartDateEnd}
+                        />
                     </form>
                     {pieChartData.length !== 0 && <PieChart data={pieChartData}/>}
                 </div>
-                <LineChart />
+                <div>
+                    <form>
+                        <FormInputCategory
+                            selectedCategories={lineChartCategories}
+                            handleSelectCategory={category => setLineChartCategories([
+                                ...lineChartCategories,
+                                category
+                            ])}
+                            handleUnselectCategory={removedCategory => setLineChartCategories(
+                                lineChartCategories.filter(category => {
+                                    return category !== removedCategory;
+                                })
+                            )}
+                        />
+                    </form>
+                    {pieChartData.length !== 0 && <LineChart data={lineChartData} />}
+                </div>
             </div>);
 }
 

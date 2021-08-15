@@ -101,7 +101,10 @@ const PieChart = ({ data }) => {
            });
     }
 
-    return (<div id="pie-container"/>);
+    return (<div>
+        <h2>Porównanie składowych wydatków</h2>
+        <div id="pie-container"/>
+    </div>);
 }
 
 export default PieChart;

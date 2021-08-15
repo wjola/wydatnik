@@ -21,6 +21,7 @@
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
+    "d3-array": "^3.0.1",
     "firebase": "^8.6.7",
     "mini-svg-data-uri": "^1.2.3",
     "moment": "^2.29.1",
