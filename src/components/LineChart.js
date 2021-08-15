@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
+import { categoriesData } from '../reducers/expenses';
 
-
-const LineChart = ({ data }) => {
+const LineChart = ({ data, categories }) => {
     const margin = { top: 40, right: 40, bottom: 60, left: 40 };
     const width = 1100 - margin.left - margin.right;
     const height = 280 - margin.top - margin.bottom;
-    const color = "OrangeRed";
-    const yMinValue = 0;//d3.min(data, (d) => Number(d[1][0][1]));
-    const yMaxValue = d3.max(data, (d) => Number(d[1][0][1]));
+    const yMinValue = 0;
+
+    const getMaxAmountForMonth = (monthData) => {
+        console.log(!!monthData && monthData);
+        console.log(!!monthData && Math.max.apply(0, monthData[1].map(categoryData => Number(categoryData[1]))));
+        return !!monthData && Math.max.apply(0, monthData[1].map(categoryData => Number(categoryData[1])));
+    }
+    const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d));
 
     useEffect(() => {
     }, []);
@@ -35,11 +40,25 @@ const LineChart = ({ data }) => {
         d3.select(ref).call(yAxis);
     };
 
-    const linePath = d3
+    const getMonthlyAmountForCategory = (categoryArray, category) => {
+        const categoryIndex = categoryArray.findIndex(el => {
+            return el[0] === category; }
+        );
+
+        if (categoryIndex !== -1) {
+            return Number(categoryArray[categoryIndex][1]);
+        } else {
+            return 0;
+        }
+    }
+
+    const getLinePathForCategory = (category) => {
+        return d3
         .line()
-        .x((d) => getX(parseDate(d[0])))
-        .y((d) => getY(Number(d[1][0][1])))
-        .curve(d3.curveLinear)(data);
+            .x((d) => getX(parseDate(d[0])))
+            .y((d) => getY(getMonthlyAmountForCategory(d[1], category)))
+            .curve(d3.curveLinear)(data);
+    }
 
     return (<div>
         <h2>Porównanie miesięcznych wydatków w kategorii w czasie</h2>
@@ -47,8 +66,6 @@ const LineChart = ({ data }) => {
             <svg
                 viewBox={`-50 -50 ${width + margin.left + margin.right} 
                                   ${height + margin.top + margin.bottom}`}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
             >
                 <g className="axis" ref={getYAxis} />
                 <g
@@ -56,7 +73,18 @@ const LineChart = ({ data }) => {
                     ref={getXAxis}
                     transform={`translate(0,${height})`}
                 />
-                <path strokeWidth={3} fill="none" stroke={color} d={linePath} />
+
+                {categories.map(category => {
+                    return (
+                    <path
+                        key={category}
+                        strokeWidth={3}
+                        fill="none"
+                        stroke={categoriesData.find(el => 
+                            el.name == category).colorClass}
+                        d={getLinePathForCategory(category)}
+                    />
+                )})}
 
                 <text
                     transform={"rotate(-90)"}
@@ -72,14 +100,13 @@ const LineChart = ({ data }) => {
                             y={getY(Number(item[1][0][1]))}
                             textAnchor="middle"
                         >
-                            Huhu
                         </text>
 
                         <circle
                             cx={getX(parseDate(item[0]))}
                             cy={getY(Number(item[1][0][1]))}
                             r={4}
-                            fill={color}
+                            // fill={color}
                             strokeWidth={0}
                             stroke="#fff"
                             style={{ transition: "ease-out .1s" }}

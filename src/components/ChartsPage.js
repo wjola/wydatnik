@@ -105,7 +105,7 @@ const ChartsPage = ({ expenses }) => {
                             )}
                         />
                     </form>
-                    {pieChartData.length !== 0 && <LineChart data={lineChartData} />}
+                    {pieChartData.length !== 0 && <LineChart data={lineChartData} categories={lineChartCategories}/>}
                 </div>
             </div>);
 }
