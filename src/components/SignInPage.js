@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import SignInput from './SignInput';
+import PigLogo from '../../images/piggy-bank-no-outline.svg';
 
 const SignInPage = () => {
     const history = useHistory();
@@ -14,6 +15,7 @@ const SignInPage = () => {
     }
 
     return (<div className='login__body'>
+        <img src={PigLogo} className='logo__pig logo__pig--medium'/>
         <form className='login__form'>
             <h2 className='login__header'>Logowanie</h2>
             <SignInput
