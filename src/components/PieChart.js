@@ -81,7 +81,7 @@ const PieChart = ({ data }) => {
            .attr("refX", 3)
            .attr("refY", 3)
            .append("circle")
-           .style('fill', '#000000')
+           .style('fill', '#383838')
            .attr("cx", 3)
            .attr("cy", 3)
            .attr("r", 3);
@@ -90,7 +90,7 @@ const PieChart = ({ data }) => {
         arc.append("path")
            .attr("class", "pointer")
            .style("fill", "none")
-           .style("stroke", "white")
+           .style("stroke", "#383838")
            .attr("marker-end", "url(#circ)")
            .attr("d", function(d) {
                 if(d.cx > d.ox) {

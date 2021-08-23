@@ -10,7 +10,8 @@ import FormInputCategory from './FormInputCategory';
 const ChartsPage = ({ expenses }) => {
     const [pieChartData, setPieChartData] = useState([]);
     const [pieChartDateStart, setPieChartDateStart] = useState(moment().startOf('month'));
-    const [pieChartDateEnd, setPieChartDateEnd] = useState(moment().endOf('month'));
+    const [pieChartDateEnd, setPieChartDateEnd] = useState(moment().endOf('month'));    const [lineChartDateStart, setLineChartDateStart] = useState(moment().startOf('month'));
+    const [lineChartDateEnd, setLineChartDateEnd] = useState(moment().endOf('month'));
     const [lineChartCategories, setLineChartCategories] = useState([]);
     const [lineChartData, setLineChartData] = useState([]);
     let expensesSumPerMonth = [];
@@ -28,13 +29,17 @@ const ChartsPage = ({ expenses }) => {
         getDataForLineChart();
     }, [lineChartCategories]);
 
-    const getDataForPieChart = () => {
-        const filteredExpenses = expenses.filter(d => {
-            const dateFromMatch = moment(d.date, 'DD/MM/YYYY').isAfter(pieChartDateStart);
-            const dateToMatch = moment(d.date, 'DD/MM/YYYY').isBefore(pieChartDateEnd);
+    const getExpensesFilteredByDate = (dateStart, dateEnd) => {
+        return expenses.filter(d => {
+            const dateFromMatch = moment(d.date, 'DD/MM/YYYY').isAfter(dateStart);
+            const dateToMatch = moment(d.date, 'DD/MM/YYYY').isBefore(dateEnd);
             
             return dateFromMatch && dateToMatch;
         });
+    }
+
+    const getDataForPieChart = () => {
+        const filteredExpenses = getExpensesFilteredByDate(pieChartDateStart, pieChartDateEnd);
     
         expensesSumPerMonth = categoriesData.map(category => {
             return {
@@ -55,7 +60,8 @@ const ChartsPage = ({ expenses }) => {
     }
 
     const getDataForLineChart = () => {
-        const filteredExpenses = expenses.filter(expense => {
+        const expensesFilteredByDate = getExpensesFilteredByDate(lineChartDateStart, lineChartDateEnd);
+        const expensesFilteredByCategory = expensesFilteredByDate.filter(expense => {
             if (lineChartCategories.includes(expense.category)) {
                 return true;
             } else {
@@ -71,8 +77,7 @@ const ChartsPage = ({ expenses }) => {
             }
         });
 
-        console.log(filteredExpenses);
-        setLineChartData(d3.rollups(filteredExpenses,
+        setLineChartData(d3.rollups(expensesFilteredByCategory,
                  v => v.reduce((acc, curr) => acc + Number.parseFloat(curr.amount), 0),
                  d => d.date.substring(d.date.indexOf('\/')+1),
                  d => d.category));
@@ -92,6 +97,12 @@ const ChartsPage = ({ expenses }) => {
                 </div>
                 <div>
                     <form>
+                        <FormInputDateRange
+                            startDate={lineChartDateStart}
+                            endDate={lineChartDateEnd}
+                            setStartDate={setLineChartDateStart}
+                            setEndDate={setLineChartDateEnd}
+                        />
                         <FormInputCategory
                             selectedCategories={lineChartCategories}
                             handleSelectCategory={category => setLineChartCategories([
@@ -105,7 +116,7 @@ const ChartsPage = ({ expenses }) => {
                             )}
                         />
                     </form>
-                    {pieChartData.length !== 0 && <LineChart data={lineChartData} categories={lineChartCategories}/>}
+                    {lineChartData.length !== 0 && lineChartCategories.length > 0 && <LineChart data={lineChartData} categories={lineChartCategories}/>}
                 </div>
             </div>);
 }

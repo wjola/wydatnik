@@ -3,13 +3,11 @@ import { categoriesData } from '../reducers/expenses';
 
 const LineChart = ({ data, categories }) => {
     const margin = { top: 40, right: 40, bottom: 60, left: 40 };
-    const width = 1100 - margin.left - margin.right;
+    const width = 900 - margin.left - margin.right;
     const height = 280 - margin.top - margin.bottom;
     const yMinValue = 0;
 
     const getMaxAmountForMonth = (monthData) => {
-        console.log(!!monthData && monthData);
-        console.log(!!monthData && Math.max.apply(0, monthData[1].map(categoryData => Number(categoryData[1]))));
         return !!monthData && Math.max.apply(0, monthData[1].map(categoryData => Number(categoryData[1])));
     }
     const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d));
@@ -67,7 +65,10 @@ const LineChart = ({ data, categories }) => {
                 viewBox={`-50 -50 ${width + margin.left + margin.right} 
                                   ${height + margin.top + margin.bottom}`}
             >
-                <g className="axis" ref={getYAxis} />
+                <g
+                    className="axis"
+                    ref={getYAxis}
+                />
                 <g
                     className="axis xAxis"
                     ref={getXAxis}
@@ -78,10 +79,10 @@ const LineChart = ({ data, categories }) => {
                     return (
                     <path
                         key={category}
-                        strokeWidth={3}
+                        strokeWidth={1}
                         fill="none"
                         stroke={categoriesData.find(el => 
-                            el.name == category).colorClass}
+                            el.name == category).color}
                         d={getLinePathForCategory(category)}
                     />
                 )})}
@@ -106,7 +107,6 @@ const LineChart = ({ data, categories }) => {
                             cx={getX(parseDate(item[0]))}
                             cy={getY(Number(item[1][0][1]))}
                             r={4}
-                            // fill={color}
                             strokeWidth={0}
                             stroke="#fff"
                             style={{ transition: "ease-out .1s" }}

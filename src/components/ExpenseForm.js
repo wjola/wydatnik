@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { addExpenseAsync, editExpenseAsync } from '../actions/expenses';
 
 const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
-    console.log(expense);
     const isExpenseEdited = !(Object.keys(expense).length === 0);
 
     const [amount, setAmount] = useState(expense.amount || '');
@@ -16,10 +15,6 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
     const [details, setDetails] = useState(expense.details || '');
     const [calendarFocused, setCalendarFocused] = useState(false);
     const history = useHistory();
-
-    useEffect(() => {
-        console.log(category);
-    }, [category]);
 
     const onClick = (e) => {
         e.preventDefault();

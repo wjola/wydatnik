@@ -27,14 +27,14 @@ const defaultExpenses = [
 ];
 
 export const categoriesData = [
-    { name: 'groceries', displayedName: 'Spożywcze', colorClass: 'blue'},
-    { name: 'alcohol', displayedName: 'Alkohol', colorClass: 'red'},
-    { name: 'drugstore', displayedName: 'Chemia', colorClass: 'turquise'},
-    { name: 'home', displayedName: 'Dom', colorClass: 'yellow'},
-    { name: 'gifts', displayedName: 'Prezenty', colorClass: 'purple'},
-    { name: 'goouts', displayedName: 'Wyjścia', colorClass: 'orange'},
-    { name: 'car', displayedName: 'Samochód', colorClass: 'brown'},
-    { name: 'flowers', displayedName: 'Kwiaty', colorClass: 'green'}
+    { name: 'groceries', displayedName: 'Spożywcze', colorClass: 'blue', color: '#0185FF'},
+    { name: 'alcohol', displayedName: 'Alkohol', colorClass: 'navy', color: '#3139a8'},
+    { name: 'drugstore', displayedName: 'Chemia', colorClass: 'turquise', color: '#04CABE'},
+    { name: 'home', displayedName: 'Dom', colorClass: 'yellow', color: '#FFC701'},
+    { name: 'gifts', displayedName: 'Prezenty', colorClass: 'pink', color: '#a03b9b'},
+    { name: 'goouts', displayedName: 'Wyjścia', colorClass: 'red', color: '##9b2d3b'},
+    { name: 'car', displayedName: 'Samochód', colorClass: 'orange', color: '#936032'},
+    { name: 'flowers', displayedName: 'Kwiaty', colorClass: 'green', color: '#048339'}
 ];
 
 const expensesReducer = (state = [], action) => {
