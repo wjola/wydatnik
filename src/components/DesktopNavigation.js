@@ -7,7 +7,7 @@ import AddIcon from '../../images/add.svg';
 const DesktopNavigation = () => {
     return (
         <nav className='nav-container--desktop'>
-            <NavLink to='/' className='nav-element nav-element--withText'>
+            <NavLink to='/user' className='nav-element nav-element--withText'>
                 <img src={UserIcon} className='icon icon--light' />
                 <p className='nav-element__text'>Moje dane</p>
             </NavLink>

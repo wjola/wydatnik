@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SignInput from './SignInput';
 import PigLogo from '../../images/piggy-bank-no-outline.svg';
+import { signInAsync } from '../actions/auth';
 
-const SignInPage = () => {
+const SignInPage = ( { signIn } ) => {
     const history = useHistory();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
     const onClick = (e) => {
         e.preventDefault();
-
-        history.push('/');
+        signIn();
     }
 
     return (<div className='login__body'>
@@ -41,4 +42,8 @@ const SignInPage = () => {
     </div>)
 }
 
-export default SignInPage;
+const mapDispatchToProps = (dispatch) => ({
+    signIn: () => dispatch(signInAsync())
+});
+
+export default connect(undefined, mapDispatchToProps)(SignInPage);

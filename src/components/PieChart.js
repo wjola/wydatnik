@@ -5,7 +5,7 @@ const PieChart = ({ data }) => {
         top: 100,
         right: 100,
         bottom: 100,
-        left: 100,
+        left: 150,
     };
     const width = 2 * 100 + margin.left + margin.right;
     const height = 2 * 100 + margin.top + margin.bottom;
@@ -101,10 +101,7 @@ const PieChart = ({ data }) => {
            });
     }
 
-    return (<div>
-        <h2>Porównanie składowych wydatków</h2>
-        <div id="pie-container"/>
-    </div>);
+    return (<div id="pie-container"/>);
 }
 
 export default PieChart;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
+import Header from './Header';
 import { categoriesData } from '../reducers/expenses';
 import FormInputDateRange from './FormInputDateRange';
 import FormInputCategory from './FormInputCategory';
@@ -10,7 +11,8 @@ import FormInputCategory from './FormInputCategory';
 const ChartsPage = ({ expenses }) => {
     const [pieChartData, setPieChartData] = useState([]);
     const [pieChartDateStart, setPieChartDateStart] = useState(moment().startOf('month'));
-    const [pieChartDateEnd, setPieChartDateEnd] = useState(moment().endOf('month'));    const [lineChartDateStart, setLineChartDateStart] = useState(moment().startOf('month'));
+    const [pieChartDateEnd, setPieChartDateEnd] = useState(moment().endOf('month'));
+    const [lineChartDateStart, setLineChartDateStart] = useState(moment().startOf('month'));
     const [lineChartDateEnd, setLineChartDateEnd] = useState(moment().endOf('month'));
     const [lineChartCategories, setLineChartCategories] = useState([]);
     const [lineChartData, setLineChartData] = useState([]);
@@ -27,7 +29,7 @@ const ChartsPage = ({ expenses }) => {
 
     useEffect(() => {
         getDataForLineChart();
-    }, [lineChartCategories]);
+    }, [lineChartCategories, lineChartDateStart, lineChartDateStart]);
 
     const getExpensesFilteredByDate = (dateStart, dateEnd) => {
         return expenses.filter(d => {
@@ -83,42 +85,47 @@ const ChartsPage = ({ expenses }) => {
                  d => d.category));
     }
 
-    return (<div>
-                <div>
-                    <form>
-                        <FormInputDateRange
-                            startDate={pieChartDateStart}
-                            endDate={pieChartDateEnd}
-                            setStartDate={setPieChartDateStart}
-                            setEndDate={setPieChartDateEnd}
-                        />
-                    </form>
-                    {pieChartData.length !== 0 && <PieChart data={pieChartData}/>}
+    return (<>
+                <Header />
+                <div className='subpage__body container'>
+                    <h2>Porównanie proporcji wydatków między {moment(pieChartDateStart).format('DD-MM-YYYY')} a {moment(pieChartDateEnd).format('DD-MM-YYYY')}</h2>
+                    <div>
+                        <form>
+                            <FormInputDateRange
+                                startDate={pieChartDateStart}
+                                endDate={pieChartDateEnd}
+                                setStartDate={setPieChartDateStart}
+                                setEndDate={setPieChartDateEnd}
+                            />
+                        </form>
+                        {pieChartData.length !== 0 && <PieChart data={pieChartData}/>}
+                    </div>
+                    <div>
+                        <h2>Porównanie wydatków w kategoriach między {moment(lineChartDateStart).format('DD-MM-YYYY')} a {moment(lineChartDateEnd).format('DD-MM-YYYY')}</h2>
+                        <form>
+                            <FormInputDateRange
+                                startDate={lineChartDateStart}
+                                endDate={lineChartDateEnd}
+                                setStartDate={setLineChartDateStart}
+                                setEndDate={setLineChartDateEnd}
+                            />
+                            <FormInputCategory
+                                selectedCategories={lineChartCategories}
+                                handleSelectCategory={category => setLineChartCategories([
+                                    ...lineChartCategories,
+                                    category
+                                ])}
+                                handleUnselectCategory={removedCategory => setLineChartCategories(
+                                    lineChartCategories.filter(category => {
+                                        return category !== removedCategory;
+                                    })
+                                )}
+                            />
+                        </form>
+                        {lineChartData.length !== 0 && lineChartCategories.length > 0 && <LineChart data={lineChartData} categories={lineChartCategories}/>}
+                    </div>
                 </div>
-                <div>
-                    <form>
-                        <FormInputDateRange
-                            startDate={lineChartDateStart}
-                            endDate={lineChartDateEnd}
-                            setStartDate={setLineChartDateStart}
-                            setEndDate={setLineChartDateEnd}
-                        />
-                        <FormInputCategory
-                            selectedCategories={lineChartCategories}
-                            handleSelectCategory={category => setLineChartCategories([
-                                ...lineChartCategories,
-                                category
-                            ])}
-                            handleUnselectCategory={removedCategory => setLineChartCategories(
-                                lineChartCategories.filter(category => {
-                                    return category !== removedCategory;
-                                })
-                            )}
-                        />
-                    </form>
-                    {lineChartData.length !== 0 && lineChartCategories.length > 0 && <LineChart data={lineChartData} categories={lineChartCategories}/>}
-                </div>
-            </div>);
+            </>);
 }
 
 const mapStateToProps = (state) => {

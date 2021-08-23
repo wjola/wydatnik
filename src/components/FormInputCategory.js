@@ -9,7 +9,7 @@ const FormInputCategory = ({
 }) => {
     return (
         <fieldset className='categories-container'>
-            <label>Wybierz kategorie:</label>
+            <label>Wybierz kategorię:</label>
             {
                 categoriesData.map(category => {
                     return (

@@ -5,17 +5,39 @@ import { Provider } from 'react-redux';
 import './styles/main.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import './styles/react_dates_overrides.css';
-import AppRouter from './components/AppRouter';
+import AppRouter, { history } from './components/AppRouter';
 import configureStore from './store/store';
+import { firebase } from './firebase/firebase';
+import { setExpensesAsync } from './actions/expenses';
 
 const store = configureStore();
+let hasRendered = false;
 
-console.log(store.getState());
-
-const app = (
+const jsx = (
         <Provider store={store}>
             <AppRouter />
         </Provider>
     );
 
-ReactDOM.render(app, document.getElementById('app'));
+const renderApp = () => {
+    if (!hasRendered) {
+        ReactDOM.render(jsx, document.getElementById('app'));
+        hasRendered = true;
+    }
+}
+
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        store.dispatch(setExpensesAsync()).then(() => {
+            renderApp();
+            if (history.location.pathname === '/signin') {
+                history.push('/');
+            }
+        });
+    } else {
+        renderApp();
+        history.push('/home');
+    }
+});

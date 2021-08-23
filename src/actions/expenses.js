@@ -1,4 +1,4 @@
-import database from '../firebase/firebase';
+import { database } from '../firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 export const addExpenseAsync = (expense) => {
@@ -47,7 +47,6 @@ const editExpense = (id, updates) => {
 }
 
 export const removeExpenseAsync =  (id) => {
-    console.log('usuwam');
     return async (dispatch) => {
         try {
             await database.ref(`users/wjola/expenses`).child(id).remove();

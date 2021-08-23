@@ -58,9 +58,7 @@ const LineChart = ({ data, categories }) => {
             .curve(d3.curveLinear)(data);
     }
 
-    return (<div>
-        <h2>Porównanie miesięcznych wydatków w kategorii w czasie</h2>
-        <div id="line-container">
+    return (<div id="line-container">
             <svg
                 viewBox={`-50 -50 ${width + margin.left + margin.right} 
                                   ${height + margin.top + margin.bottom}`}
@@ -114,8 +112,7 @@ const LineChart = ({ data, categories }) => {
                     </g>
                 })}
             </svg>
-        </div>
-    </div>);
+        </div>);
 }
 
 export default LineChart;
