@@ -4,7 +4,7 @@ import moment from 'moment';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
 import Header from './Header';
-import { categoriesData } from '../reducers/expenses';
+import { getCategories } from '../utils/categoriesData';
 import FormInputDateRange from './FormInputDateRange';
 import FormInputCategory from './FormInputCategory';
 
@@ -43,11 +43,11 @@ const ChartsPage = ({ expenses }) => {
     const getDataForPieChart = () => {
         const filteredExpenses = getExpensesFilteredByDate(pieChartDateStart, pieChartDateEnd);
     
-        expensesSumPerMonth = categoriesData.map(category => {
+        expensesSumPerMonth = getCategories().map(category => {
             return {
-                category: category.name,
+                category,
                 amount: filteredExpenses.reduce((acc, curr) => {
-                    if ( curr.category == category.name) {
+                    if ( curr.category == category) {
                         return acc + (Number.parseFloat(curr.amount) || 0);
                     } else {
                         return acc;

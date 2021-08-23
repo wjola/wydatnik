@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { getDisplayedNameForCategory } from '../utils/categoriesData';
 
 const PieChart = ({ data }) => {
     const margin = {
@@ -63,7 +64,7 @@ const PieChart = ({ data }) => {
 
                 return d.y = Math.sin(a) * (150+30);
             })
-            .text(function(d) { return d.data.category;  })
+            .text(function(d) { return getDisplayedNameForCategory(d.data.category);  })
             .style('font-size', '15px')
             .style('fill', '#000000')
             .each(function(d) {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { categoriesData } from '../reducers/expenses';
+import { getColorForCategory } from '../utils/categoriesData';
 
 const LineChart = ({ data, categories }) => {
     const margin = { top: 40, right: 40, bottom: 60, left: 40 };
@@ -79,8 +79,7 @@ const LineChart = ({ data, categories }) => {
                         key={category}
                         strokeWidth={1}
                         fill="none"
-                        stroke={categoriesData.find(el => 
-                            el.name == category).color}
+                        stroke={getColorForCategory(category)}
                         d={getLinePathForCategory(category)}
                     />
                 )})}

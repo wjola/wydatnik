@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { categoriesData } from '../reducers/expenses';
+import React from 'react';
+import { getDisplayedNameForCategory } from '../utils/categoriesData';
 import TickIcon from '../../images/tick.svg';
 
 const Category = ({ category, clickable = false, isChosen = false }) => {
-    const displayedName = categoriesData.find(el => el.name === category).displayedName;
+    const displayedName = getDisplayedNameForCategory(category);
 
     return (
         <p

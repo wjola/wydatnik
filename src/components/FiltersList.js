@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import FilterIcon from '../../images/filter.svg';
 import { defaultFilters } from '../reducers/filters';
-import { categoriesData } from '../reducers/expenses';
+import { getDisplayedNameForCategory } from '../utils/categoriesData';
 import { resetFilters } from '../actions/filters';
 
 const FiltersList = ({ filters, resetFilters }) => {
@@ -37,15 +36,10 @@ const FiltersList = ({ filters, resetFilters }) => {
         resetFilters();
     }
 
-    const getCategoryDisplayedName = (name) => {
-        const index = categoriesData.findIndex(category => category.name === name);
-        return categoriesData[index].displayedName;
-    }
-
     const getCategoriesSetting = () => {
         return (isFilterSet('categories') &&
             <p>
-                Kategorie: {filters.categories.map(category => getCategoryDisplayedName(category)).join(', ')}
+                Kategorie: {filters.categories.map(category => getDisplayedNameForCategory(category)).join(', ')}
             </p>
         );
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Category from './Category';
-import { categoriesData } from '../reducers/expenses';
+import { getCategories } from '../utils/categoriesData';
 
 const FormInputCategory = ({
     selectedCategories,
@@ -11,15 +11,15 @@ const FormInputCategory = ({
         <fieldset className='categories-container'>
             <label>Wybierz kategorię:</label>
             {
-                categoriesData.map(category => {
+                getCategories().map(category => {
                     return (
-                        <div className='category__checkbox' key={category.name}>
+                        <div className='category__checkbox' key={category}>
                             <input
-                                id={category.name}
+                                id={category}
                                 type='checkbox'
                                 className='hidden'
                                 name='category'
-                                value={category.name}
+                                value={category}
                                 onChange={
                                     e => {
                                         if(e.target.checked == true) {
@@ -29,13 +29,13 @@ const FormInputCategory = ({
                                         }                                            
                                     }
                                 }
-                                checked={selectedCategories.includes(category.name)}
+                                checked={selectedCategories.includes(category)}
                             />
-                            <label htmlFor={category.name}>
+                            <label htmlFor={category}>
                                 <Category
-                                    category={category.name}                                                
+                                    category={category}                                                
                                     clickable={true}
-                                    isChosen={selectedCategories.includes(category.name)}
+                                    isChosen={selectedCategories.includes(category)}
                                 />
                             </label>
                         </div>
