@@ -9,13 +9,14 @@ import AppRouter, { history } from './components/AppRouter';
 import configureStore from './store/store';
 import { firebase } from './firebase/firebase';
 import { setExpensesAsync } from './actions/expenses';
+import { signIn } from './actions/auth';
 
 const store = configureStore();
 let hasRendered = false;
 
 const jsx = (
         <Provider store={store}>
-            <AppRouter />
+            <AppRouter/>
         </Provider>
     );
 
@@ -36,6 +37,7 @@ firebase.auth().onAuthStateChanged((user) => {
                 history.push('/');
             }
         });
+        store.dispatch(signIn(user.providerData[0]));
     } else {
         renderApp();
         history.push('/home');

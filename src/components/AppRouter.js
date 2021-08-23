@@ -10,6 +10,8 @@ import FiltersPage from './FiltersPage';
 import HomePage from './HomePage';
 import ChartsPage from './ChartsPage';
 import UserPage from './UserPage';
+import PrivateRoute from '../routers/PrivateRoute';
+import PublicRoute from '../routers/PublicRoute';
 
 export const history = createBrowserHistory();
 
@@ -18,15 +20,15 @@ const AppRouter = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route path='/' component={MainPage} exact={true} />
-                <Route path='/edit/:id' component={EditExpensePage} />
-                <Route path='/add' component={AddExpense} />
-                <Route path='/filters' component={FiltersPage} />
-                <Route path='/signin' component={SignInPage} />
-                <Route path='/signup' component={SignUpPage} />
-                <Route path='/home' component={HomePage} />
-                <Route path='/charts' component={ChartsPage} />
-                <Route path='/user' component={UserPage} />
+                <PrivateRoute path='/' component={MainPage} exact={true} />
+                <PrivateRoute path='/edit/:id' component={EditExpensePage} />
+                <PrivateRoute path='/add' component={AddExpense} />
+                <PrivateRoute path='/filters' component={FiltersPage} />
+                <PublicRoute path='/signin' component={SignInPage} />
+                <PublicRoute path='/signup' component={SignUpPage} />
+                <PublicRoute path='/home' component={HomePage} />
+                <PrivateRoute path='/charts' component={ChartsPage} />
+                <PrivateRoute path='/user' component={UserPage} />
             </Switch>
         </Router>
     );

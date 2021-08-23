@@ -1,13 +1,35 @@
 import { firebase, googleAuthProvider } from '../firebase/firebase';
 
 export const signInAsync = () => {
-    return () => {
-        return firebase.auth().signInWithRedirect(googleAuthProvider);
+    return async () => {
+        try {
+            await firebase.auth().signInWithRedirect(googleAuthProvider);
+        } catch (e) {
+            console.warn(e)
+        }
     }
 }
 
 export const signOutAsync = () => {
-    return () => {
-        return firebase.auth().signOut();
+    return async (dispatch) => {
+        try {
+            await firebase.auth().signOut();
+            dispatch(signOut());
+        } catch(e) {
+            console.warn(e);
+        }
+    }
+}
+
+export const signIn = (data) => {
+    return {
+        type: 'LOGIN',
+        data
+    }
+}
+
+const signOut = () => {
+    return {
+        type: 'LOGOUT'
     }
 }
