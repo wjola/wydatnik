@@ -55,9 +55,10 @@ fieldset {
     background-color: transparent;
     border: none;
     height: 100%;
+    transition: filter, .2s;
 
     &--dark {
-        margin-right: 1.5rem;
+        filter: invert(15%) sepia(58%) saturate(3816%) hue-rotate(246deg) brightness(87%) contrast(100%);
     }
 }
 
@@ -106,6 +107,7 @@ fieldset {
     background-color: transparent;
     border-radius: 15rem;
     border: none;
+    cursor: pointer;
     display: flex;
     font-family: inherit;
     font-size: 2rem;
@@ -121,6 +123,20 @@ fieldset {
     &--dark {
         border: 1px solid var(--font-dark);
         color: var(--font-dark);
+        transition: background-color, color, .2s;
+
+        &:hover {
+            background-color: var(--font-dark);
+            color: var(--off-white);
+
+            .icon {
+                filter: invert(100%) sepia(48%) saturate(1147%) hue-rotate(201deg) brightness(115%) contrast(116%);
+            }
+        }
+
+        &:active {
+            
+        }
     }
 
     &--light {
@@ -138,4 +154,8 @@ fieldset {
         background-color: var(--off-white);
         color: var(--font-dark);
     }
+}
+
+button .icon {
+    margin-right: 2rem;
 }

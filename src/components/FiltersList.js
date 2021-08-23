@@ -86,9 +86,9 @@ const FiltersList = ({ filters, resetFilters }) => {
                 }
                 <Link
                     to='/filters'
-                    className='button button--full filter-button'
+                    className='button button--dark filter-button'
                 >
-                    <img src={FilterIcon} className='icon icon--light' />
+                    <img src={FilterIcon} className='icon icon--dark' />
                     {filtersActive ? 'Zmień filtry' : 'Filtruj'}
                 </Link>
             </div>

@@ -33,6 +33,7 @@
     &--withText {
         align-items: center;
         background-color: transparent;
+        border-bottom: 1px solid transparent;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -46,6 +47,11 @@
 
         & + & {
             margin-left: 3rem;
+        }
+
+        &:hover, &--selected {
+            border-bottom: 1px solid var(--off-white);
+            border-radius: 0;
         }
     }
 
