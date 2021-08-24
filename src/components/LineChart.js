@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { getColorForCategory } from '../utils/categoriesData';
 
 const LineChart = ({ data, categories }) => {
-    const margin = { top: 40, right: 40, bottom: 60, left: 40 };
+    const [activeIndex, setActiveIndex] = useState(null);
+    const margin = { top: 40, right: 40, bottom: 60, left: 50 };
     const width = 900 - margin.left - margin.right;
     const height = 280 - margin.top - margin.bottom;
     const yMinValue = 0;
-
+    
     const getMaxAmountForMonth = (monthData) => {
         return !!monthData && Math.max.apply(0, monthData[1].map(categoryData => Number(categoryData[1])));
     }
+    
     const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d));
-
-    useEffect(() => {
-    }, []);
-
     const parseDate = d3.timeParse("%m/%Y");
 
     const getX = d3
@@ -58,10 +56,23 @@ const LineChart = ({ data, categories }) => {
             .curve(d3.curveLinear)(data);
     }
 
+    const handleMouseMove = (e) => {
+        const bisect = d3.bisector((d) => parseDate(d[0])).left;
+        const x0 = getX.invert(d3.clientPoint(e.target, e)[0]);
+        const index = bisect(data, x0, 1);
+        setActiveIndex(index);
+    };
+
+    const handleMouseLeave = () => {
+        setActiveIndex(null);
+    };
+
     return (<div id="line-container">
             <svg
                 viewBox={`-50 -50 ${width + margin.left + margin.right} 
                                   ${height + margin.top + margin.bottom}`}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
             >
                 <g
                     className="axis"
@@ -85,30 +96,38 @@ const LineChart = ({ data, categories }) => {
                 )})}
 
                 <text
+                    fill="#666"
                     transform={"rotate(-90)"}
                     x={0 - height / 2} y={0 - margin.left} dy="1em">
                     {"PLN"}
                 </text>
-
-                {data.map(item => {
-                    <g key={item[0]}>
-                        <text
-                            fill="#666"
-                            x={getX(parseDate(item[0]))}
-                            y={getY(Number(item[1][0][1]))}
-                            textAnchor="middle"
-                        >
-                        </text>
-
-                        <circle
-                            cx={getX(parseDate(item[0]))}
-                            cy={getY(Number(item[1][0][1]))}
-                            r={4}
-                            strokeWidth={0}
-                            stroke="#fff"
-                            style={{ transition: "ease-out .1s" }}
-                        />
-                    </g>
+                {console.log(data)}
+                {data.map((item, index) => {
+                    return index === activeIndex &&  
+                        item[1].map((el, i) => {
+                            console.log('item[1]',item[1]);
+                            console.log('el ', el, 'i ', i);
+                            return (
+                            <g key={el[1]}>
+                                <text
+                                    fill="#666"
+                                    x={getX(parseDate(item[0]))}
+                                    y={getY(Number(item[1][i][1])) - 10}
+                                    textAnchor="middle"
+                                >
+                                    {Number(item[1][i][1])}
+                                </text>
+                            <circle
+                                cx={getX(parseDate(item[0]))}
+                                cy={getY(Number(item[1][i][1]))}
+                                r={4}
+                                fill="#891EBB"
+                                strokeWidth={4}
+                                stroke="#891EBB"
+                                style={{ transition: "ease-out .1s" }}
+                            />
+                        </g>
+                        )});                    
                 })}
             </svg>
         </div>);

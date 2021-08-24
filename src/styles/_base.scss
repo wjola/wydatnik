@@ -213,7 +213,7 @@ button .icon {
     width: 75%;
 }
 
-  @-webkit-keyframes load {
+ @-webkit-keyframes load {
     0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
@@ -222,9 +222,9 @@ button .icon {
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
     }
-  }
+}
 
-  @keyframes load {
+ @keyframes load {
     0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
@@ -233,5 +233,4 @@ button .icon {
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
     }
-  }
-  
+}
