@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import './styles/main.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import './styles/react_dates_overrides.css';
-import AppRouter, { history } from './components/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/store';
 import { firebase } from './firebase/firebase';
 import { setExpensesAsync } from './actions/expenses';

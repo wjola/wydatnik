@@ -26,14 +26,14 @@ const FormInputCategory = ({
                                             handleSelectCategory(e.target.value);
                                         } else {
                                             handleUnselectCategory(e.target.value)
-                                        }                                            
+                                        }         
                                     }
                                 }
                                 checked={selectedCategories.includes(category)}
                             />
                             <label htmlFor={category}>
                                 <Category
-                                    category={category}                                                
+                                    category={category} 
                                     clickable={true}
                                     isChosen={selectedCategories.includes(category)}
                                 />

@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Expense from './Expense';
 import FiltersList from './FiltersList';
-// import { setExpensesAsync } from '../actions/expenses';
 import getSelectedExpenses from '../selectors/selectExpenses';
 
 const ExpenseList = ({ expenses, setExpenses }) => {
-
-    // useEffect(() => {
-    //     setExpenses();
-    // }, []);
-
-    // useEffect(() => {
-
-    // });
-
     return (
         <div className='expense-list-container container'>
             <FiltersList />
@@ -41,8 +31,5 @@ const mapStateToProps = (state) => {
         filters: state.FiltersList
     }; 
 };
-// const mapDispatchToProps = (dispatch) => ({
-//         setExpenses: () => dispatch(setExpensesAsync())
-// });
 
 export default connect(mapStateToProps)(ExpenseList);

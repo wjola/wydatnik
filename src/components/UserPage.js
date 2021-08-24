@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signOutAsync } from '../actions/auth';
-import Header from './Header';
 
 const UserPage = ({ signOut, user }) => {
 
@@ -10,8 +9,7 @@ const UserPage = ({ signOut, user }) => {
         signOut();
     }
 
-    return (<>
-        <Header />
+    return (
         <div className='subpage__body container'>
             <h2 className='subpage__header'>Zalogowany użytkownik:</h2>
             <div className='user-data'>
@@ -26,7 +24,7 @@ const UserPage = ({ signOut, user }) => {
                 Wyloguj
             </button>
         </div>
-    </>);
+    );
 }
 
 const mapStateToProps = (state) => ({

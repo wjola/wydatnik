@@ -1,17 +1,17 @@
 import React from 'react';
-import { Router, Route, Switch} from 'react-router-dom';
+import { Router, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import MainPage from './MainPage';
-import SignInPage from './SignInPage';
-import SignUpPage from './SignUpPage';
-import EditExpensePage from './EditExpensePage';
-import AddExpense from './AddExpense';
-import FiltersPage from './FiltersPage';
-import HomePage from './HomePage';
-import ChartsPage from './ChartsPage';
-import UserPage from './UserPage';
-import PrivateRoute from '../routers/PrivateRoute';
-import PublicRoute from '../routers/PublicRoute';
+import MainPage from '../components/MainPage';
+import SignInPage from '../components/SignInPage';
+import SignUpPage from '../components/SignUpPage';
+import EditExpensePage from '../components/EditExpensePage';
+import AddExpense from '../components/AddExpense';
+import FiltersPage from '../components/FiltersPage';
+import HomePage from '../components/HomePage';
+import ChartsPage from '../components/ChartsPage';
+import UserPage from '../components/UserPage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 export const history = createBrowserHistory();
 

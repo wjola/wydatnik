@@ -1,15 +1,12 @@
 import React from 'react';
 import ExpenseForm from './ExpenseForm';
-import Header from './Header';
 
 const AddExpense = () => {
-    return (<>
-        <Header />
+    return (
         <div className='subpage__body container'>
             <h2 className='subpage__header'>Dodaj wydatek:</h2>
             <ExpenseForm />
-        </div>
-    </>);
+        </div>);
 }
 
 export default AddExpense;

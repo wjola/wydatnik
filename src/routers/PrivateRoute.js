@@ -1,16 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import useDeviceClass from '../utils/useDeviceClass';
 
 const PrivateRoute = ({
     isAuthenticated,
     component: Component,
     ...rest
 }) => {
+    const isDesktop = useDeviceClass() === 'desktop';
+
     return (
     <Route {...rest} component={(props) => 
         (isAuthenticated ? (
-            <Component {...props} />
+            <>
+                <Header />
+                <Component {...props} />
+                {!isDesktop && <Navigation />}
+            </>
         ) : (
             <Redirect to='/home' />
         ))}

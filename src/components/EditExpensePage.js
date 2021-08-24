@@ -1,17 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import ExpenseForm from './ExpenseForm';
-import Header from './Header';
 
 const EditExpensePage = ({ expense }) => {
-    return (<>
-        <Header />
+    return (
         <div className='subpage__body container'>
             <h2 className='subpage__header'>Edytuj dane o wydatku:</h2>
             <ExpenseForm expense={expense}/>
         </div>
-    </>);
+    );
 }
 
 const mapStateToProps = (state, props) => {

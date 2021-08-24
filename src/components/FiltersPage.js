@@ -56,84 +56,80 @@ const FiltersPage = (props) => {
     }
 
     return (
-        <>
-            <Header />
-            <form className='subpage__body container'>
-                <h2 className='subpage__header'>Wybierz filtry</h2>
-                <fieldset className='filters__criterion'>
-                    <legend>Podaj zakres kwot:</legend>
+        <form className='subpage__body container'>
+            <h2 className='subpage__header'>Wybierz filtry</h2>
+            <fieldset className='filters__criterion'>
+                <legend>Podaj zakres kwot:</legend>
+                <input
+                    className='input filters__input'
+                    type='number'
+                    name='amount'
+                    id='amount-from'
+                    value={amountFrom || ''}
+                    onChange={e => handleAmountFromChange(e.target.value)}
+                />
+                <input
+                    className='input filters__input'
+                    type='number'
+                    name='amount'
+                    id='amount-to'
+                    value={amountTo || ''}
+                    onChange={e => handleAmountToChange(e.target.value)}
+                />
+            </fieldset>
+            <div className='filters__criterion'>
+                <FormInputCategory
+                    selectedCategories={props.filters.categories}
+                    handleSelectCategory={props.includeCategory}
+                    handleUnselectCategory={props.excludeCategory}
+                />
+            </div>
+            <div className='filters__criterion'>
+                <FormInputDateRange
+                    startDate={props.filters.startDate}
+                    endDate={props.filters.endDate}
+                    setStartDate={props.setStartDate}
+                    setEndDate={props.setEndDate}
+                />
+            </div>
+            <div className='filters__criterion'>
+                <fieldset>
+                    <legend>Wybierz sortowanie:</legend>
                     <input
-                        className='input filters__input'
-                        type='number'
-                        name='amount'
-                        id='amount-from'
-                        value={amountFrom || ''}
-                        onChange={e => handleAmountFromChange(e.target.value)}
+                        type='radio'
+                        id='date-sort'
+                        name='sort'
+                        value='date'
+                        onChange={props.sortByDate}
+                        checked={props.filters.sortBy === 'date'}
                     />
+                    <label htmlFor='date-sort'>po dacie</label>
                     <input
-                        className='input filters__input'
-                        type='number'
-                        name='amount'
-                        id='amount-to'
-                        value={amountTo || ''}
-                        onChange={e => handleAmountToChange(e.target.value)}
+                        type='radio'
+                        id='amount-sort'
+                        name='sort'
+                        value='amount'
+                        onChange={props.sortByAmount}
+                        checked={props.filters.sortBy === 'amount'}
                     />
+                    <label htmlFor='amount-sort'>po kwocie</label>
                 </fieldset>
-                <div className='filters__criterion'>
-                    <FormInputCategory
-                        selectedCategories={props.filters.categories}
-                        handleSelectCategory={props.includeCategory}
-                        handleUnselectCategory={props.excludeCategory}
-                    />
-                </div>
-                <div className='filters__criterion'>
-                    <FormInputDateRange
-                        startDate={props.filters.startDate}
-                        endDate={props.filters.endDate}
-                        setStartDate={props.setStartDate}
-                        setEndDate={props.setEndDate}
-                    />
-                </div>
-                <div className='filters__criterion'>
-                    <fieldset>
-                        <legend>Wybierz sortowanie:</legend>
-                        <input
-                            type='radio'
-                            id='date-sort'
-                            name='sort'
-                            value='date'
-                            onChange={props.sortByDate}
-                            checked={props.filters.sortBy === 'date'}
-                        />
-                        <label htmlFor='date-sort'>po dacie</label>
-                        <input
-                            type='radio'
-                            id='amount-sort'
-                            name='sort'
-                            value='amount'
-                            onChange={props.sortByAmount}
-                            checked={props.filters.sortBy === 'amount'}
-                        />
-                        <label htmlFor='amount-sort'>po kwocie</label>
-                    </fieldset>
-                </div>
-                <div className='filters__button-container'>
-                    <button 
-                        className='button button--dark filter-button'
-                        onClick={handleFilterCancel}
-                    >
-                        Anuluj
-                    </button>
-                    <button 
-                        className='button button--full filter-button'
-                        onClick={handleFilterSubmit}
-                    >
-                        Zastosuj
-                    </button>
-                </div>
-            </form>
-            <Navigation />
-        </>
+            </div>
+            <div className='filters__button-container'>
+                <button 
+                    className='button button--dark filter-button'
+                    onClick={handleFilterCancel}
+                >
+                    Anuluj
+                </button>
+                <button 
+                    className='button button--full filter-button'
+                    onClick={handleFilterSubmit}
+                >
+                    Zastosuj
+                </button>
+            </div>
+        </form>
     );
 }
 
