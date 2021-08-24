@@ -4,7 +4,7 @@ import Expense from './Expense';
 import FiltersList from './FiltersList';
 import getSelectedExpenses from '../selectors/selectExpenses';
 
-const ExpenseList = ({ expenses, setExpenses }) => {
+const ExpenseList = ({ expenses }) => {
     return (
         <div className='expense-list-container container'>
             <FiltersList />
