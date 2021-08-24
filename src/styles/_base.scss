@@ -163,3 +163,71 @@ button .icon {
 .user-data {
     margin-bottom: 4rem;
 }
+
+.loader {
+    animation: load 1.4s infinite linear;
+    background: var(--font-dark);
+    background: -moz-linear-gradient(left, var(--font-dark) 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, var(--font-dark) 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, var(--font-dark) 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, var(--font-dark) 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, var(--font-dark) 10%, rgba(255, 255, 255, 0) 42%);
+    border-radius: 50%;
+    height: 15em;
+    left: 50%;
+    position: absolute;
+    top: 42%;
+    transform: translateZ(0);
+    width: 15em;
+    -webkit-animation: load 1.4s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+  }
+
+  .loader:before {
+    background: var(--font-dark);
+    border-radius: 100% 0 0 0;
+    content: '';
+    height: 50%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+
+  .loader:after {
+    background: var(--base-light);
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    height: 75%;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 75%;
+}
+
+  @-webkit-keyframes load {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes load {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
