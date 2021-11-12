@@ -1,34 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import PigLogo from '../../images/piggy-bank-no-outline.svg';
-import useDeviceClass from '../utils/useDeviceClass';
-import DesktopNavigation from './DesktopNavigation';
-import { history } from '../routers/AppRouter';
-import { isHeaderOrNavNeeded } from '../utils/isHeaderAndNavNeeded';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import PigLogo from "../../images/piggy-bank-no-outline.svg";
+import useDeviceClass from "../utils/useDeviceClass";
+import DesktopNavigation from "./DesktopNavigation";
 
-const Header = () => {
-    const [isHeaderNeeded, setIsHeaderNeeded] = useState(false);
-    const isDesktop = useDeviceClass() === 'desktop';
-    
-    useEffect(() => {
-        setIsHeaderNeeded(isHeaderOrNavNeeded(history.location.pathname));
+const Header = ({ isAuthenticated }) => {
+  const isDesktop = useDeviceClass() === "desktop";
 
-        return history.listen((location, action) => {
-            setIsHeaderNeeded(isHeaderOrNavNeeded(location.pathname));
-        });
-    }, []);
+  return (
+    isAuthenticated && (
+      <div className="header-container">
+        <header className="header">
+          <NavLink to="/" className="header__logo">
+            <img src={PigLogo} className="logo__pig logo__pig--small" />
+            <h1 className="title">Kosztopis</h1>
+          </NavLink>
+          {isDesktop && <DesktopNavigation />}
+        </header>
+      </div>
+    )
+  );
+};
 
-    return isHeaderNeeded && (
-        <div className='header-container'>
-            <header className='header'>
-                <NavLink to='/' className='header__logo'>
-                    <img src={PigLogo} className='logo__pig logo__pig--small'/>
-                    <h1 className='title'>Kosztopis</h1>
-                </NavLink>
-                {isDesktop && <DesktopNavigation />}
-            </header>
-        </div>       
-    );
-}
+const mapStateToProps = (state) => ({
+  isAuthenticated: !!state.user & (Object.keys(state.user).length > 0),
+});
 
-export default Header;
+export default connect(mapStateToProps)(Header);
