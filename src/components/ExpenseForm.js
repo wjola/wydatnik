@@ -42,7 +42,7 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
   };
 
   const onAmountChange = (amount) => {
-    const regexp = /^([1-9]\d*(\.)?\d?\d?)|([1-9]\d*)$/;
+    const regexp = /^([1-9]\d*(\.)?\d?\d?)|([1-9]\d*)|()$/;
 
     if (amount.toString().match(regexp)) {
       setAmount(amount);

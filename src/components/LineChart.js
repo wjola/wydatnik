@@ -8,17 +8,10 @@ const LineChart = ({ data, categories }) => {
   const height = 180;
   const yMinValue = 0;
 
-  const getMaxAmountForMonth = (monthData) => {
-    return (
-      !!monthData &&
-      Math.max.apply(
-        0,
-        monthData[1].map((categoryData) => Number(categoryData[1]))
-      )
-    );
-  };
+  const getMaxAmountForMonth = (monthData) =>
+    !!monthData && Math.max.apply(0, Object.values(monthData));
 
-  const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d));
+  const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d[1]));
   const parseDate = d3.timeParse("%m/%Y");
 
   const getX = d3
@@ -35,7 +28,7 @@ const LineChart = ({ data, categories }) => {
     const xAxis = d3.axisBottom(getX);
     d3.select(ref)
       .call(xAxis.tickFormat(d3.timeFormat("%m/%Y")))
-      .call(xAxis.ticks(data.length - 1));
+      .call(xAxis.ticks(data.size - 1));
   };
 
   const getYAxis = (ref) => {
@@ -43,30 +36,18 @@ const LineChart = ({ data, categories }) => {
     d3.select(ref).call(yAxis);
   };
 
-  const getMonthlyAmountForCategory = (categoryArray, category) => {
-    const categoryIndex = categoryArray.findIndex((el) => {
-      return el[0] === category;
-    });
-
-    if (categoryIndex !== -1) {
-      return Number(categoryArray[categoryIndex][1]);
-    } else {
-      return 0;
-    }
-  };
-
   const getLinePathForCategory = (category) => {
     return d3
       .line()
       .x((d) => getX(parseDate(d[0])))
-      .y((d) => getY(getMonthlyAmountForCategory(d[1], category)))
-      .curve(d3.curveLinear)(data);
+      .y((d) => getY(!!d[1] ? d[1][category] : 0))
+      .curve(d3.curveLinear)(Array.from(data));
   };
 
   const handleMouseMove = (e) => {
-    const bisect = d3.bisector((d) => parseDate(d[0])).left;
+    const bisect = d3.bisector((d) => parseDate(d[0])).center;
     const x0 = getX.invert(d3.clientPoint(e.target, e)[0]);
-    const index = bisect(data, x0, 1);
+    const index = bisect(Array.from(data), x0, 0);
     setActiveIndex(index);
   };
 
@@ -90,17 +71,20 @@ const LineChart = ({ data, categories }) => {
           transform={`translate(0,${height})`}
         />
 
-        {categories.map((category) => {
-          return (
-            <path
-              key={category}
-              strokeWidth={1}
-              fill="none"
-              stroke={getColorForCategory(category)}
-              d={getLinePathForCategory(category)}
-            />
-          );
-        })}
+        {!!data &&
+          data.size > 0 &&
+          !!categories &&
+          categories.map((category) => {
+            return (
+              <path
+                key={`path-${category}`}
+                strokeWidth={1}
+                fill="none"
+                stroke={getColorForCategory(category)}
+                d={getLinePathForCategory(category)}
+              />
+            );
+          })}
 
         <text
           fill="#666"
@@ -111,35 +95,35 @@ const LineChart = ({ data, categories }) => {
         >
           {"PLN"}
         </text>
-        {console.log(data)}
-        {data.map((item, index) => {
+
+        {Array.from(data).map(([month, monthData], index) => {
           return (
             index === activeIndex &&
-            item[1].map((el, i) => {
-              console.log("item[1]", item[1]);
-              console.log("el ", el, "i ", i);
-              return (
-                <g key={el[1]}>
-                  <text
-                    fill="#666"
-                    x={getX(parseDate(item[0]))}
-                    y={getY(Number(item[1][i][1])) - 10}
-                    textAnchor="middle"
-                  >
-                    {Number(item[1][i][1])}
-                  </text>
-                  <circle
-                    cx={getX(parseDate(item[0]))}
-                    cy={getY(Number(item[1][i][1]))}
-                    r={4}
-                    fill="#891EBB"
-                    strokeWidth={4}
-                    stroke="#891EBB"
-                    style={{ transition: "ease-out .1s" }}
-                  />
-                </g>
-              );
-            })
+            Array.from(new Map(Object.entries(monthData))).map(
+              ([category, amount]) => {
+                return (
+                  <g key={`${month}-${category}`}>
+                    <text
+                      fill="#666"
+                      x={getX(parseDate(month))}
+                      y={getY(Number(amount) + 8)}
+                      textAnchor="middle"
+                    >
+                      {amount}
+                    </text>
+                    <circle
+                      cx={getX(parseDate(month))}
+                      cy={getY(Number(amount))}
+                      r={4}
+                      fill="#891EBB"
+                      strokeWidth={4}
+                      stroke="#891EBB"
+                      style={{ transition: "ease-out .1s" }}
+                    />
+                  </g>
+                );
+              }
+            )
           );
         })}
       </svg>

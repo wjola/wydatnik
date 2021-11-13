@@ -33,7 +33,7 @@ const categoriesData = [
     name: "goouts",
     displayedName: "Wyjścia",
     colorClass: "red",
-    color: "##9b2d3b",
+    color: "#9b2d3b",
   },
   {
     name: "car",

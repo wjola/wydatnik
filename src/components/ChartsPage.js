@@ -4,6 +4,7 @@ import moment from "moment";
 import PieChart from "./PieChart";
 import LineChart from "./LineChart";
 import { getCategories } from "../utils/categoriesData";
+import { compareDates, getMonthsBetweenDates } from "../utils/chartDataUtils";
 import FormInputDateRange from "./FormInputDateRange";
 import FormInputCategory from "./FormInputCategory";
 
@@ -73,45 +74,66 @@ const ChartsPage = ({ expenses }) => {
     setPieChartData(expensesSumPerMonth);
   };
 
+  const getLineChartDataByMonths = (expensesFilteredByCategory) => {
+    const monthsBetween = getMonthsBetweenDates(
+      lineChartDateStart,
+      lineChartDateEnd
+    );
+
+    const dataForLineChart = new Map();
+
+    monthsBetween.forEach((month) => {
+      let monthData;
+      if (lineChartCategories.length > 0) {
+        monthData = lineChartCategories.reduce(
+          (dataObj, category) => ({
+            ...dataObj,
+            [category]: expensesFilteredByCategory.reduce(
+              (categorySum, expense) =>
+                sumCategoryExpensesForMonth(
+                  categorySum,
+                  expense,
+                  category,
+                  month
+                ),
+              0
+            ),
+          }),
+          {}
+        );
+      }
+
+      dataForLineChart.set(month, monthData);
+    });
+
+    return dataForLineChart;
+  };
+
+  const sumCategoryExpensesForMonth = (
+    categorySum,
+    expense,
+    category,
+    date
+  ) => {
+    if (
+      expense.date.substring(expense.date.indexOf("/") + 1) === date &&
+      expense.category === category
+    ) {
+      return categorySum + expense.amount;
+    } else return categorySum;
+  };
+
   const getDataForLineChart = () => {
     const expensesFilteredByDate = getExpensesFilteredByDate(
       lineChartDateStart,
       lineChartDateEnd
     );
-    const expensesFilteredByCategory = expensesFilteredByDate
-      .filter((expense) => {
-        if (lineChartCategories.includes(expense.category)) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .sort((exp1, exp2) => {
-        if (
-          moment(exp1.date, "DD/MM/YYYY").isBefore(
-            moment(exp2.date, "DD/MM/YYYY")
-          )
-        ) {
-          return -1;
-        } else if (
-          moment(exp1.date, "DD/MM/YYYY").isAfter(
-            moment(exp2.date, "DD/MM/YYYY")
-          )
-        ) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
 
-    setLineChartData(
-      d3.rollups(
-        expensesFilteredByCategory,
-        (v) => v.reduce((acc, curr) => acc + Number.parseFloat(curr.amount), 0),
-        (d) => d.date.substring(d.date.indexOf("/") + 1),
-        (d) => d.category
-      )
-    );
+    const expensesFilteredByCategory = expensesFilteredByDate
+      .filter((expense) => lineChartCategories.includes(expense.category))
+      .sort((exp1, exp2) => compareDates(exp1.date, exp2.date));
+
+    setLineChartData(getLineChartDataByMonths(expensesFilteredByCategory));
   };
 
   return (
@@ -159,9 +181,11 @@ const ChartsPage = ({ expenses }) => {
             }
           />
         </form>
-        {lineChartData.length !== 0 && lineChartCategories.length > 0 && (
-          <LineChart data={lineChartData} categories={lineChartCategories} />
-        )}
+        {!!lineChartData &&
+          lineChartData.length !== 0 &&
+          lineChartCategories.length > 0 && (
+            <LineChart data={lineChartData} categories={lineChartCategories} />
+          )}
       </div>
     </div>
   );
