@@ -1,120 +1,123 @@
 .home__page {
-    background-color: rgba(34, 31, 135, 1);
-    height: 100vh;
+  background-color: rgba(34, 31, 135, 1);
+  height: 100vh;
 }
 
 .home__container {
+  align-items: center;
+  background-image: url("../../images/homepage_figures.svg"),
+    radial-gradient(
+      rgb(137, 30, 187) 20%,
+      rgb(34, 31, 135) 99.99%,
+      rgb(34, 31, 135) 100%
+    );
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: 130% auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media (min-width: 400px) {
+    background-position-x: initial;
+    background-size: 107% auto;
+  }
+
+  @media (min-width: 600px) {
+    background-position-y: -10rem, center;
+  }
+
+  @media (min-width: 900px) {
+    justify-content: center;
+    padding: 10rem 0;
+  }
+
+  &__buttons {
     align-items: center;
-    background-image: url('../../images/homepage_figures.svg'), 
-                      radial-gradient(rgb(137, 30, 187) 20%,rgb(34, 31, 135) 99.99%, rgb(34, 31, 135) 100%);
+    background-image: url("../../images/gradient_wave.svg");
+    background-size: cover;
     background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: 130% auto;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: flex-end;
+    height: 50%;
+    justify-content: center;
+    padding: 10rem;
     width: 100%;
 
     @media (min-width: 400px) {
-        background-position-x: initial;
-        background-size: 107% auto;
+      height: 45%;
     }
-    
+
     @media (min-width: 600px) {
-        background-position-y: -10rem, center;
+      height: 50%;
+      justify-content: flex-end;
     }
 
     @media (min-width: 900px) {
-        justify-content: center;
-        padding: 10rem 0;
+      background-image: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: auto;
+      justify-content: center;
+      padding: 0;
+
+      & > button:last-of-type {
+        margin-left: 3rem;
+      }
     }
-
-    &__buttons {
-        align-items: center;
-        background-image: url('../../images/gradient_wave.svg');
-        background-size: cover;
-        background-position-x: center;
-        display: flex;
-        flex-direction: column;
-        height: 50%;
-        justify-content: center;
-        padding: 10rem;
-        width: 100%;
-
-        @media (min-width: 400px) {
-            height: 45%;
-        }
-
-        @media (min-width: 600px) {
-            height: 50%;
-            justify-content: flex-end;
-
-        }
-
-        @media (min-width: 900px) {
-            background-image: none;
-            flex-direction: row;
-            flex-wrap: wrap;
-            height: auto;
-            justify-content: center;
-            padding: 0;
-
-            & > button:last-of-type {
-                margin-left: 3rem;
-            }
-        }
-    }
+  }
 }
 
 .home__header {
-    color: var(--off-white);
-    font-family: inherit;
-    font-size: 3.7rem;
-    font-weight: 100;
+  color: var(--off-white);
+  font-family: inherit;
+  font-size: 3.7rem;
+  font-weight: 100;
+  margin-bottom: 2rem;
+  margin-top: 5rem;
+  text-align: center;
+
+  @media (min-width: 400px) {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 900px) {
     margin-bottom: 2rem;
-    margin-top: 5rem;
-    text-align: center;
-
-    @media (min-width: 400px) {
-        margin-bottom: 0;
-    }
-
-    @media (min-width: 900px) {
-        margin-bottom: 2rem;
-        width: 100%;
-    }
+    width: 100%;
+  }
 }
 
 .logo__pig {
-    max-height: 40rem;
-    width: 75%;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  max-height: 40rem;
+  width: 75%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
-    &--big {
-        margin-bottom: -15%;
+  &--big {
+    margin-bottom: -15%;
 
-        @media (min-width: 400px) {
-            margin-bottom: -10%;
-        }
-    
-        @media (min-width: 900px) {
-            margin-bottom: 0;
-        }
+    @media (min-width: 400px) {
+      margin-bottom: -10%;
     }
 
-    &--medium {
-        margin-bottom: 5rem;
-        max-height: 20rem;
+    @media (min-width: 900px) {
+      margin-bottom: 0;
     }
+  }
 
-    &--small {
-        margin-right: 3rem;
-        max-height: 7rem;
-        width: auto;
-    }
+  &--medium {
+    margin-bottom: 5rem;
+    max-height: 20rem;
+  }
+
+  &--small {
+    margin-right: 3rem;
+    max-height: 7rem;
+    width: 7rem;
+  }
 }
 
 .highlighted {
-    color: #FFB125;
+  color: #ffb125;
 }

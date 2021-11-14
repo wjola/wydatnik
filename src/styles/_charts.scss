@@ -10,3 +10,9 @@
 .domain {
   stroke: #666666;
 }
+
+.chart-container {
+  & + & {
+    margin-top: 4rem;
+  }
+}

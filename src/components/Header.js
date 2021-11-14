@@ -2,12 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import PigLogo from "../../images/piggy-bank-no-outline.svg";
-import useDeviceClass from "../utils/useDeviceClass";
-import DesktopNavigation from "./DesktopNavigation";
+import Navigation from "./Navigation";
 
 const Header = ({ isAuthenticated }) => {
-  const isDesktop = useDeviceClass() === "desktop";
-
   return isAuthenticated ? (
     <div className="header-container">
       <header className="header">
@@ -15,7 +12,7 @@ const Header = ({ isAuthenticated }) => {
           <img src={PigLogo} className="logo__pig logo__pig--small" />
           <h1 className="title">Kosztopis</h1>
         </NavLink>
-        {isDesktop && <DesktopNavigation />}
+        <Navigation />
       </header>
     </div>
   ) : (

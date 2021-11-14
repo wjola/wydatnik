@@ -56,7 +56,8 @@ fieldset {
 .icon {
   background-color: transparent;
   border: none;
-  height: 100%;
+  height: 4rem;
+  width: 4rem;
   transition: filter, 0.2s;
 
   &--dark {

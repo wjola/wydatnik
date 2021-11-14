@@ -7,9 +7,9 @@ const useDeviceClass = () => {
     const windowWidth = window.innerWidth;
     if (windowWidth < 600) {
       setDeviceClass("smartphone");
-    } else if (windowWidth < 900) {
+    } else if (windowWidth < 1000) {
       setDeviceClass("tablet");
-    } else if (windowWidth >= 900) {
+    } else if (windowWidth >= 1000) {
       setDeviceClass("desktop");
     }
   };

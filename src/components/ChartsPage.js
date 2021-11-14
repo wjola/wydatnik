@@ -17,7 +17,7 @@ const ChartsPage = ({ expenses }) => {
     moment().endOf("month")
   );
   const [lineChartDateStart, setLineChartDateStart] = useState(
-    moment().startOf("month")
+    moment().subtract(1, "months").startOf("month")
   );
   const [lineChartDateEnd, setLineChartDateEnd] = useState(
     moment().endOf("month")
@@ -138,12 +138,12 @@ const ChartsPage = ({ expenses }) => {
 
   return (
     <div className="subpage__body container">
-      <h2>
-        Porównanie proporcji wydatków między{" "}
-        {moment(pieChartDateStart).format("DD-MM-YYYY")} a{" "}
-        {moment(pieChartDateEnd).format("DD-MM-YYYY")}
-      </h2>
-      <div>
+      <div className="chart-container">
+        <h2>
+          Porównanie proporcji wydatków między{" "}
+          {moment(pieChartDateStart).format("DD-MM-YYYY")} a{" "}
+          {moment(pieChartDateEnd).format("DD-MM-YYYY")}
+        </h2>
         <form>
           <FormInputDateRange
             startDate={pieChartDateStart}
@@ -152,9 +152,13 @@ const ChartsPage = ({ expenses }) => {
             setEndDate={setPieChartDateEnd}
           />
         </form>
-        {pieChartData.length !== 0 && <PieChart data={pieChartData} />}
+        {pieChartData.length !== 0 ? (
+          <PieChart data={pieChartData} />
+        ) : (
+          <p>Brak wydatków w wybranym czasie.</p>
+        )}
       </div>
-      <div>
+      <div className="chart-container">
         <h2>
           Porównanie wydatków w kategoriach między{" "}
           {moment(lineChartDateStart).format("DD-MM-YYYY")} a{" "}
@@ -182,10 +186,12 @@ const ChartsPage = ({ expenses }) => {
           />
         </form>
         {!!lineChartData &&
-          lineChartData.length !== 0 &&
-          lineChartCategories.length > 0 && (
-            <LineChart data={lineChartData} categories={lineChartCategories} />
-          )}
+        lineChartData.length !== 0 &&
+        lineChartCategories.length > 0 ? (
+          <LineChart data={lineChartData} categories={lineChartCategories} />
+        ) : (
+          <p>Brak wydatków dla podanych kryteriów.</p>
+        )}
       </div>
     </div>
   );
