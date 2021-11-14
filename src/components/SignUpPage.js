@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import SignInput from "./SignInput";
 import PigLogo from "../../images/piggy-bank-no-outline.svg";
+import { signUpAsync } from "../actions/auth";
 
-const SignUpPage = () => {
+const SignUpPage = ({ signUp }) => {
   const history = useHistory();
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
-
-  const onClick = (e) => {
-    e.preventDefault();
-
-    history.push("/");
-  };
+  const [passwordAlert, setPasswordAlert] = useState("");
+  const [passwordRepeatAlert, setPasswordRepeatAlert] = useState("");
+  const [emailAlert, setEmailAlert] = useState("");
 
   return (
     <div className="login__body">
@@ -21,10 +20,12 @@ const SignUpPage = () => {
       <form className="login__form">
         <h2 className="login__header">Rejestracja</h2>
         <SignInput
-          id="login"
-          setValueFromInput={setLogin}
-          label="Login"
-          value={login}
+          id="email"
+          setValueFromInput={setEmail}
+          label="E-mail"
+          value={email}
+          alert={emailAlert}
+          setAlert={setEmailAlert}
         />
         <SignInput
           password
@@ -32,6 +33,8 @@ const SignUpPage = () => {
           setValueFromInput={setPassword}
           label="Hasło"
           value={password}
+          alert={passwordAlert}
+          setAlert={setPasswordAlert}
         />
         <SignInput
           password
@@ -39,16 +42,60 @@ const SignUpPage = () => {
           setValueFromInput={setPasswordRepeat}
           label="Potwórz hasło"
           value={passwordRepeat}
+          alert={passwordRepeatAlert}
+          setAlert={setPasswordRepeatAlert}
         />
-        <button
-          className="button button--light login__button"
-          onClick={onClick}
-        >
-          Zarejestruj
-        </button>
+        <div className="button-container">
+          <button
+            className="button button--light login__button"
+            onClick={(e) => {
+              e.preventDefault();
+              let correctCredentials = true;
+
+              if (password.length >= 6) {
+                setPasswordAlert("");
+              } else {
+                setPasswordAlert("Hasło powinno mieć co najmniej 6 znaków!");
+                correctCredentials = false;
+              }
+
+              if (passwordRepeat === password) {
+                setPasswordRepeatAlert("");
+              } else {
+                setPasswordRepeatAlert("Hasła się różnią!");
+                correctCredentials = false;
+              }
+
+              if (email.match(/^\w+\@\w+\.\w+$/)) {
+                setEmailAlert("");
+              } else {
+                setEmailAlert("Wpisz poprawnie e-mail");
+                correctCredentials = false;
+              }
+              if (correctCredentials) {
+                signUp(email, password);
+              }
+            }}
+          >
+            Zarejestruj
+          </button>
+          <button
+            className="button button--light login__button"
+            onClick={(e) => {
+              e.preventDefault();
+              history.push("/");
+            }}
+          >
+            Wróć
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default SignUpPage;
+const mapDispatchToProps = (dispatch) => ({
+  signUp: (email, password) => dispatch(signUpAsync(email, password)),
+});
+
+export default connect(undefined, mapDispatchToProps)(SignUpPage);

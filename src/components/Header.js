@@ -8,18 +8,18 @@ import DesktopNavigation from "./DesktopNavigation";
 const Header = ({ isAuthenticated }) => {
   const isDesktop = useDeviceClass() === "desktop";
 
-  return (
-    isAuthenticated && (
-      <div className="header-container">
-        <header className="header">
-          <NavLink to="/" className="header__logo">
-            <img src={PigLogo} className="logo__pig logo__pig--small" />
-            <h1 className="title">Kosztopis</h1>
-          </NavLink>
-          {isDesktop && <DesktopNavigation />}
-        </header>
-      </div>
-    )
+  return isAuthenticated ? (
+    <div className="header-container">
+      <header className="header">
+        <NavLink to="/" className="header__logo">
+          <img src={PigLogo} className="logo__pig logo__pig--small" />
+          <h1 className="title">Kosztopis</h1>
+        </NavLink>
+        {isDesktop && <DesktopNavigation />}
+      </header>
+    </div>
+  ) : (
+    <></>
   );
 };
 

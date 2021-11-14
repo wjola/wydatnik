@@ -1,7 +1,15 @@
 import React from "react";
 import EyeIcon from "../../images/eye.svg";
 
-const SignInput = ({ id, password = false, value = "", label, ...rest }) => {
+const SignInput = ({
+  id,
+  password = false,
+  value = "",
+  label,
+  alert = "",
+  setAlert = {},
+  ...rest
+}) => {
   const switchPasswordView = (e) => {
     e.preventDefault();
 
@@ -22,7 +30,12 @@ const SignInput = ({ id, password = false, value = "", label, ...rest }) => {
         type={password ? "password" : "text"}
         value={value}
         placeholder=" "
-        onChange={(e) => rest.setValueFromInput(e.target.value)}
+        onChange={(e) => {
+          if (alert.length > 0 && value.length > 0) {
+            setAlert("");
+          }
+          rest.setValueFromInput(e.target.value);
+        }}
       />
       <label htmlFor={id} className="login__label">
         {label}
@@ -36,6 +49,7 @@ const SignInput = ({ id, password = false, value = "", label, ...rest }) => {
           <img src={EyeIcon} className="icon" />
         </button>
       )}
+      {alert.length > 0 && <p className="sign__alert">{alert}</p>}
     </fieldset>
   );
 };

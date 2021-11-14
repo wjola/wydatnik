@@ -1,17 +1,15 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import SignInput from "./SignInput";
 import PigLogo from "../../images/piggy-bank-no-outline.svg";
-import { signInAsync } from "../actions/auth";
+import GoogleLogo from "../../images/google.svg";
+import { signInGoogleAsync, signInPasswordAsync } from "../actions/auth";
 
-const SignInPage = ({ signIn }) => {
+const SignInPage = ({ signIn, signInByGoogle }) => {
+  const history = useHistory();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-
-  const onClick = (e) => {
-    e.preventDefault();
-    signIn();
-  };
 
   return (
     <div className="login__body">
@@ -31,19 +29,44 @@ const SignInPage = ({ signIn }) => {
           label="Hasło"
           value={password}
         />
-        <button
-          className="button button--light login__button"
-          onClick={onClick}
-        >
-          Zaloguj
-        </button>
+        <div className="button-container">
+          <button
+            className="button button--light login__button"
+            onClick={(e) => {
+              e.preventDefault();
+              signIn(login, password);
+            }}
+          >
+            Zaloguj
+          </button>
+          <button
+            className="button button--light login__button"
+            onClick={(e) => {
+              e.preventDefault();
+              history.push("/");
+            }}
+          >
+            Wróć
+          </button>
+          <button
+            className="button button--light button--light--full login__button login__button--google"
+            onClick={(e) => {
+              e.preventDefault();
+              signInByGoogle();
+            }}
+          >
+            <img src={GoogleLogo} className="icon icon--google" />
+            Zaloguj przez Google
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  signIn: () => dispatch(signInAsync()),
+  signInByGoogle: () => dispatch(signInGoogleAsync()),
+  signIn: (login, password) => dispatch(signInPasswordAsync(login, password)),
 });
 
 export default connect(undefined, mapDispatchToProps)(SignInPage);

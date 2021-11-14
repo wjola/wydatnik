@@ -4,9 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 export const addExpenseAsync = (expense) => {
   const id = uuidv4();
 
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+
     database
-      .ref(`users/wjola/expenses/${id}`)
+      .ref(`users/${user.uid}/expenses/${id}`)
       .set({
         ...expense,
         date: expense.date,
@@ -31,18 +33,15 @@ const addExpense = (expense) => {
 };
 
 export const editExpenseAsync = (id, updates) => {
-  database
-    .ref(`users/wjola/expenses/${id}`)
-    .update({
-      ...updates,
-    })
-    .then(() => dispatch(editExpense(id, updates)))
-    .catch((e) => console.warn(e));
-
-  return {
-    type: "EDIT_EXPENSE",
-    id,
-    updates,
+  return async (dispatch, getState) => {
+    const { user } = getState();
+    database
+      .ref(`users/${user.uid}/expenses/${id}`)
+      .update({
+        ...updates,
+      })
+      .then(() => dispatch(editExpense(id, updates)))
+      .catch((e) => console.warn(e));
   };
 };
 
@@ -55,9 +54,10 @@ const editExpense = (id, updates) => {
 };
 
 export const removeExpenseAsync = (id) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { user } = getState();
     try {
-      await database.ref(`users/wjola/expenses`).child(id).remove();
+      await database.ref(`users/${user.uid}/expenses`).child(id).remove();
       dispatch(removeExpense(id));
     } catch (e) {
       console.log(e);
@@ -73,9 +73,13 @@ const removeExpense = (id) => {
 };
 
 export const setExpensesAsync = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { user } = getState();
+    console.log(user);
     try {
-      const response = await database.ref("users/wjola/expenses").get("value");
+      const response = await database
+        .ref(`users/${user.uid}/expenses`)
+        .get("value");
       const expensesById = response.val();
 
       let expenses = [];
