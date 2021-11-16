@@ -5,15 +5,20 @@ export const signInGoogleAsync = () => {
   return async (dispatch) => {
     firebase
       .auth()
-      .signInWithPopup(googleAuthProvider)
-      .then((result) => {
-        console.log(result);
-        dispatch(signIn(result.user.providerData[0]));
-        dispatch(setExpensesAsync());
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(async () => {
+        return firebase
+          .auth()
+          .signInWithPopup(googleAuthProvider)
+          .then((result) => {
+            dispatch(signIn(result.user.providerData[0]));
+            dispatch(setExpensesAsync());
+          })
+          .catch((e) => {
+            console.warn(e);
+          });
       })
-      .catch((e) => {
-        console.warn(e);
-      });
+      .catch((e) => console.warn(e));
   };
 };
 
@@ -21,21 +26,27 @@ export const signInPasswordAsync = (email, password) => {
   return async (dispatch) => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        const email = result.user.email;
-        dispatch(
-          signIn({
-            email: email,
-            uid: result.user.uid,
-            displayName: email.substring(0, email.indexOf("@")),
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(async () => {
+        return firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((result) => {
+            const email = result.user.email;
+            dispatch(
+              signIn({
+                email: email,
+                uid: result.user.uid,
+                displayName: email.substring(0, email.indexOf("@")),
+              })
+            );
+            dispatch(setExpensesAsync());
           })
-        );
-        dispatch(setExpensesAsync());
+          .catch((e) => {
+            console.warn(e);
+          });
       })
-      .catch((e) => {
-        console.warn(e);
-      });
+      .catch((e) => console.warn(e));
   };
 };
 
@@ -82,5 +93,17 @@ export const signIn = (data) => {
 const signOut = () => {
   return {
     type: "LOGOUT",
+  };
+};
+
+export const userLoading = () => {
+  return {
+    type: "USER_LOADING",
+  };
+};
+
+export const noUserFound = () => {
+  return {
+    type: "NO_USER_FOUND",
   };
 };

@@ -56,7 +56,7 @@ const Navigation = ({ isAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.user & (Object.keys(state.user).length > 0),
+  isAuthenticated: state.user.isLoading || !!state.user.uid,
 });
 
 export default connect(mapStateToProps)(Navigation);
