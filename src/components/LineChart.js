@@ -1,22 +1,34 @@
 import React, { useState } from "react";
 import { getColorForCategory } from "../utils/categoriesData";
+import useDeviceClass from "../utils/useDeviceClass";
 
 const LineChart = ({ data, categories }) => {
+  const isDesktop = useDeviceClass() === "desktop";
+  const isTablet = useDeviceClass() === "tablet";
+  const isPhone = useDeviceClass() === "smartphone";
   const [activeIndex, setActiveIndex] = useState(null);
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-  const width = 800;
-  const height = 180;
+  const width = isDesktop ? 800 : isTablet ? 650 : 400;
+  const height = isDesktop ? 180 : isTablet ? 240 : 300;
   const yMinValue = 0;
 
   const getMaxAmountForMonth = (monthData) =>
-    !!monthData && Math.max.apply(0, Object.values(monthData));
+    !!monthData ? Math.max.apply(0, Object.values(monthData)) : 0;
 
-  const yMaxValue = d3.max(data, (d) => getMaxAmountForMonth(d[1]));
+  const yMaxValue = d3.max(data, (d) => {
+    console.log("max", d);
+    return getMaxAmountForMonth(d[1]);
+  });
   const parseDate = d3.timeParse("%m/%Y");
 
   const getX = d3
     .scaleTime()
-    .domain(d3.extent(data, (d) => parseDate(d[0])))
+    .domain(
+      d3.extent(data, (d) => {
+        console.log("extent", parseDate(d[0]));
+        parseDate(d[0]);
+      })
+    )
     .range([0, width]);
 
   const getY = d3
@@ -28,6 +40,7 @@ const LineChart = ({ data, categories }) => {
     const xAxis = d3.axisBottom(getX);
     d3.select(ref)
       .call(xAxis.tickFormat(d3.timeFormat("%m/%Y")))
+      .call(xAxis.tickSize(isPhone ? "2rem" : "1em"))
       .call(xAxis.ticks(data.size - 1));
   };
 
@@ -39,8 +52,14 @@ const LineChart = ({ data, categories }) => {
   const getLinePathForCategory = (category) => {
     return d3
       .line()
-      .x((d) => getX(parseDate(d[0])))
-      .y((d) => getY(!!d[1] ? d[1][category] : 0))
+      .x((d) => {
+        console.log("xd:", d);
+        return getX(parseDate(d[0]));
+      })
+      .y((d) => {
+        console.log("gety:", getY(!!d[1] ? d[1][category] : 0));
+        return getY(!!d[1] ? d[1][category] : 0);
+      })
       .curve(d3.curveLinear)(Array.from(data));
   };
 
@@ -75,6 +94,7 @@ const LineChart = ({ data, categories }) => {
           data.size > 0 &&
           !!categories &&
           categories.map((category) => {
+            console.log(category);
             return (
               <path
                 key={`path-${category}`}
@@ -88,6 +108,7 @@ const LineChart = ({ data, categories }) => {
 
         <text
           fill="#666"
+          fontSize={isPhone ? "2rem" : "1em"}
           transform={"rotate(-90)"}
           x={0 - height / 2}
           y={0 - margin.left}

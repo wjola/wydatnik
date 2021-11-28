@@ -1,5 +1,9 @@
 const initialUserState = {
   isLoading: true,
+  uid: "",
+  photoURL: "",
+  email: "",
+  displayName: "",
 };
 
 const userReducer = (state = initialUserState, action) => {

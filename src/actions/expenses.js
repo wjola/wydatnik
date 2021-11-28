@@ -1,27 +1,27 @@
 import { database } from "../firebase/firebase";
+import { ref, child, get, set, update, remove } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 
 export const addExpenseAsync = (expense) => {
   const id = uuidv4();
 
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { user } = getState();
-
-    database
-      .ref(`users/${user.uid}/expenses/${id}`)
-      .set({
+    try {
+      await set(ref(database, `users/${user.uid}/expenses/${id}`), {
         ...expense,
         date: expense.date,
-      })
-      .then(() =>
-        dispatch(
-          addExpense({
-            ...expense,
-            id,
-          })
-        )
-      )
-      .catch((e) => console.warn(e));
+      });
+
+      dispatch(
+        addExpense({
+          ...expense,
+          id,
+        })
+      );
+    } catch (e) {
+      console.warn(e);
+    }
   };
 };
 
@@ -35,13 +35,16 @@ const addExpense = (expense) => {
 export const editExpenseAsync = (id, updates) => {
   return async (dispatch, getState) => {
     const { user } = getState();
-    database
-      .ref(`users/${user.uid}/expenses/${id}`)
-      .update({
+
+    try {
+      const dbRef = ref(database);
+      await update(child(dbRef, `users/${user.uid}/expenses/${id}`), {
         ...updates,
-      })
-      .then(() => dispatch(editExpense(id, updates)))
-      .catch((e) => console.warn(e));
+      });
+      dispatch(editExpense(id, updates));
+    } catch (e) {
+      console.warn(e);
+    }
   };
 };
 
@@ -56,8 +59,11 @@ const editExpense = (id, updates) => {
 export const removeExpenseAsync = (id) => {
   return async (dispatch, getState) => {
     const { user } = getState();
+
     try {
-      await database.ref(`users/${user.uid}/expenses`).child(id).remove();
+      const dbRef = ref(database);
+      await remove(child(dbRef, `users/${user.uid}/expenses/${id}`));
+
       dispatch(removeExpense(id));
     } catch (e) {
       console.log(e);
@@ -75,12 +81,21 @@ const removeExpense = (id) => {
 export const setExpensesAsync = () => {
   return async (dispatch, getState) => {
     const { user } = getState();
-    console.log(user);
+    let expensesById = [];
+
     try {
-      const response = await database
-        .ref(`users/${user.uid}/expenses`)
-        .get("value");
-      const expensesById = response.val();
+      const dbRef = ref(database);
+      await get(child(dbRef, `users/${user.uid}/expenses`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            expensesById = snapshot.val();
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       let expenses = [];
       for (let id in expensesById) {
