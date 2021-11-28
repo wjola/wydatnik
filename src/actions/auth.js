@@ -21,23 +21,21 @@ export const signInGoogleAsync = () => {
 
 export const signInPasswordAsync = (email, password) => {
   return async (dispatch) => {
-    async () => {
-      return signInWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-          const email = result.user.email;
-          dispatch(
-            signIn({
-              email: email,
-              uid: result.user.uid,
-              displayName: email.substring(0, email.indexOf("@")),
-            })
-          );
-          dispatch(setExpensesAsync());
-        })
-        .catch((e) => {
-          console.warn(e);
-        });
-    };
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        const email = result.user.email;
+        dispatch(
+          signIn({
+            email: email,
+            uid: result.user.uid,
+            displayName: email.substring(0, email.indexOf("@")),
+          })
+        );
+        dispatch(setExpensesAsync());
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
   };
 };
 

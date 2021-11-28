@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Router, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -17,20 +17,22 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import useDeviceClass from "../utils/useDeviceClass";
 import { auth } from "../firebase/firebase";
-import { signIn, userLoading, noUserFound } from "../actions/auth";
+import { signIn, userLoading } from "../actions/auth";
 import { setExpensesAsync } from "../actions/expenses";
 
 export const history = createBrowserHistory();
 
-const AppRouter = ({ signIn, setExpenses, userLoading, noUserFound }) => {
+const AppRouter = ({ signIn, setExpenses }) => {
   const isDesktop = useDeviceClass() === "desktop";
+
+  useEffect(() => {
+    // noUserFound();
+  }, []);
 
   auth.onAuthStateChanged(async (result) => {
     if (result) {
       await signIn(result.providerData[0]);
       setExpenses();
-    } else {
-      noUserFound();
     }
   });
 
@@ -56,8 +58,6 @@ const AppRouter = ({ signIn, setExpenses, userLoading, noUserFound }) => {
 const mapDispatchToProps = (dispatch) => ({
   signIn: (userData) => dispatch(signIn(userData)),
   setExpenses: () => dispatch(setExpensesAsync()),
-  userLoading,
-  noUserFound,
 });
 
 export default connect(undefined, mapDispatchToProps)(AppRouter);

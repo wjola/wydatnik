@@ -1,5 +1,4 @@
 const initialUserState = {
-  isLoading: true,
   uid: "",
   photoURL: "",
   email: "",
@@ -9,13 +8,9 @@ const initialUserState = {
 const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
     case "LOGIN":
-      return { ...state, ...action.data, isLoading: false };
+      return { ...state, ...action.data };
     case "LOGOUT":
-      return { ...initialUserState, isLoading: false };
-    case "USER_LOADING":
-      return { ...state, isLoading: true };
-    case "NO_USER_FOUND":
-      return { ...state, isLoading: false };
+      return { ...initialUserState };
     default:
       return state;
   }
