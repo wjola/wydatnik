@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import { noUserFound } from "../actions/auth";
@@ -9,7 +9,9 @@ const PublicRoute = ({
   noUserFound,
   ...rest
 }) => {
-  noUserFound();
+  useEffect(() => {
+    noUserFound();
+  }, []);
 
   return (
     <Route
