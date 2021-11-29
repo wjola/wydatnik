@@ -3,3 +3,4 @@ package-lock.json
 /src/bundle.js
 /public/app.js
 /public/bundle.js
+.env
