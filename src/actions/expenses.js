@@ -82,7 +82,6 @@ export const setExpensesAsync = () => {
   return async (dispatch, getState) => {
     const { user } = getState();
     let expensesById = [];
-
     try {
       const dbRef = ref(database);
       await get(child(dbRef, `users/${user.uid}/expenses`))

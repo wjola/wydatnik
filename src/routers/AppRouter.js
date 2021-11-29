@@ -17,7 +17,7 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import useDeviceClass from "../utils/useDeviceClass";
 import { auth } from "../firebase/firebase";
-import { signIn, userLoading } from "../actions/auth";
+import { signIn } from "../actions/auth";
 import { setExpensesAsync } from "../actions/expenses";
 
 export const history = createBrowserHistory();
@@ -25,13 +25,9 @@ export const history = createBrowserHistory();
 const AppRouter = ({ signIn, setExpenses }) => {
   const isDesktop = useDeviceClass() === "desktop";
 
-  useEffect(() => {
-    // noUserFound();
-  }, []);
-
   auth.onAuthStateChanged(async (result) => {
     if (result) {
-      await signIn(result.providerData[0]);
+      await signIn({ email: result.email, uid: result.uid });
       setExpenses();
     }
   });

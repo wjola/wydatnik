@@ -24,6 +24,7 @@ export const signInPasswordAsync = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const email = result.user.email;
+
         dispatch(
           signIn({
             email: email,
@@ -52,20 +53,18 @@ export const signOutAsync = () => {
 
 export const signUpAsync = (email, password) => {
   return async (dispatch) => {
-    try {
-      createUserWithEmailAndPassword(auth, email, password).then((result) => {
-        const email = result.user.email;
-        dispatch(
-          signIn({
-            email: email,
-            uid: result.user.uid,
-            displayName: email.substring(0, email.indexOf("@")),
-          })
-        );
-      });
-    } catch (e) {
-      console.warn(e);
-    }
+    createUserWithEmailAndPassword(auth, email, password).then((result) => {
+      const email = result.user.email;
+
+      dispatch(
+        signIn({
+          email: email,
+          uid: result.user.uid,
+          displayName: email.substring(0, email.indexOf("@")),
+        })
+      );
+      dispatch(setExpensesAsync());
+    });
   };
 };
 
@@ -79,17 +78,5 @@ export const signIn = (data) => {
 const signOut = () => {
   return {
     type: "LOGOUT",
-  };
-};
-
-export const userLoading = () => {
-  return {
-    type: "USER_LOADING",
-  };
-};
-
-export const noUserFound = () => {
-  return {
-    type: "NO_USER_FOUND",
   };
 };

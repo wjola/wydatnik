@@ -1,8 +1,8 @@
 const initialUserState = {
-  uid: "",
-  photoURL: "",
   email: "",
+  uid: "",
   displayName: "",
+  photoURL: "",
 };
 
 const userReducer = (state = initialUserState, action) => {
