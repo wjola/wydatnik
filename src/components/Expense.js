@@ -31,11 +31,11 @@ const Expense = ({
       <div className={`expense-item--${expanded ? "expanded" : "hidden"}`}>
         <p className={"expense-item__details"}>{details}</p>
         <div className="expense-item__icon-container">
-          <button className="icon" onClick={(e) => removeExpense(id)}>
-            <img src={DeleteIcon} className="icon icon--dark" />
+          <button className="icon " onClick={(e) => removeExpense(id)}>
+            <img src={DeleteIcon} className="icon--dark icon__img" />
           </button>
-          <Link to={`/edit/${id}`}>
-            <img src={EditIcon} className="icon icon--dark" />
+          <Link to={`/edit/${id}`} className="icon">
+            <img src={EditIcon} className="icon--dark icon__img" />
           </Link>
         </div>
       </div>

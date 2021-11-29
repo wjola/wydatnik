@@ -56,9 +56,11 @@ fieldset {
 .icon {
   background-color: transparent;
   border: none;
-  height: 4rem;
-  width: 4rem;
+  display: inline-block;
+  height: 3rem;
+  padding: 0;
   transition: filter, 0.2s;
+  width: 3rem;
 
   &--dark {
     filter: invert(15%) sepia(58%) saturate(3816%) hue-rotate(246deg)
@@ -67,6 +69,10 @@ fieldset {
 
   &--google {
     height: 60%;
+  }
+
+  & + & {
+    margin-left: 2rem;
   }
 }
 
