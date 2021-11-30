@@ -23,7 +23,7 @@ const HomePage = () => {
         <img src={PigLogo} className="logo__pig" />
         <div className="home__container__buttons">
           <h2 className="home__header">
-            Rozpocznij <span className="highlighted">Kosztopis</span>!
+            Rozpocznij <span className="highlighted">Wydatnik</span>!
           </h2>
           <button
             className="button button--light--full login__button"

@@ -10,7 +10,7 @@ const Header = ({ isAuthenticated }) => {
       <header className="header">
         <NavLink to="/" className="header__logo">
           <img src={PigLogo} className="logo__pig logo__pig--small" />
-          <h1 className="title">Kosztopis</h1>
+          <h1 className="title">Wydatnik</h1>
         </NavLink>
         <Navigation />
       </header>

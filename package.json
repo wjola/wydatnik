@@ -1,15 +1,12 @@
 {
   "homepage": "https://wjola.github.io/wydatnik/",
-  "name": "kosztopis",
+  "name": "wydatnik",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-babel": "babel src/app.js --out-file=public/app.js --presets=@babel/preset-env,@babel/preset-react --watch",
     "build": "webpack --watch",
-    "dev-server": "webpack serve --open --config webpack.dev.js",
-    "test": "test",
-    "compile:sass": "node-sass src/styles/main.scss public/styles.css -w"
+    "dev-server": "webpack serve --open --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
