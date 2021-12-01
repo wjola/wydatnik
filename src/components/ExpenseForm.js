@@ -1,12 +1,10 @@
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 import { addExpenseAsync, editExpenseAsync } from "../actions/expenses";
-import PageLoader from "./PageLoader";
-
-const { SingleDatePicker } = React.lazy(() => import("react-dates"));
+import { SingleDatePicker } from "react-dates";
 
 const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
   const isExpenseEdited = !(Object.keys(expense).length === 0);
@@ -70,78 +68,73 @@ const ExpenseForm = ({ expense = {}, addExpense, editExpense }) => {
   };
 
   return (
-    <Suspense fallback={<PageLoader />}>
-      <form>
-        <fieldset className="form-element">
-          <label htmlFor="amount">Podaj kwotę</label>
-          <input
-            className="input filters__input"
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={(e) => onAmountChange(e.target.value)}
-            autoFocus
-            required
+    <form>
+      <fieldset className="form-element">
+        <label htmlFor="amount">Podaj kwotę</label>
+        <input
+          className="input filters__input"
+          type="number"
+          id="amount"
+          value={amount}
+          onChange={(e) => onAmountChange(e.target.value)}
+          autoFocus
+          required
+        />
+      </fieldset>
+      <fieldset className="form-element">
+        <label htmlFor="date">Wybierz datę</label>
+        {
+          <SingleDatePicker
+            date={moment(date, "D/MM/YYYY")}
+            onDateChange={(date) => setDate(date.format("D/MM/YYYY"))}
+            focused={calendarFocused}
+            onFocusChange={({ focused }) => setCalendarFocused(focused)}
+            id={uuidv4()}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
           />
-        </fieldset>
-        <fieldset className="form-element">
-          <label htmlFor="date">Wybierz datę</label>
-          {
-            <SingleDatePicker
-              date={moment(date, "D/MM/YYYY")}
-              onDateChange={(date) => setDate(date.format("D/MM/YYYY"))}
-              focused={calendarFocused}
-              onFocusChange={({ focused }) => setCalendarFocused(focused)}
-              id={uuidv4()}
-              numberOfMonths={1}
-              isOutsideRange={() => false}
-            />
-          }
-        </fieldset>
-        <fieldset className="form-element">
-          <label htmlFor="category">Wybierz kategorię</label>
-          <select
-            className="input filters__input"
-            id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          >
-            <option value="groceries">spożywcze</option>
-            <option value="drugstore">chemia</option>
-            <option value="gifts">prezenty</option>
-            <option value="goouts">wyjścia</option>
-            <option value="alcohol">alkohol</option>
-            <option value="home">domowe</option>
-          </select>
-        </fieldset>
-        <fieldset className="form-element">
-          <label htmlFor="details">Dodaj komentarz</label>
-          <textarea
-            className="form-element__details input"
-            id="details"
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            rows={6}
-            maxLength={150}
-          />
-        </fieldset>
-        <div className="filters__button-container">
-          <button
-            className="button button--dark filter-button"
-            onClick={handleCancelForm}
-          >
-            Anuluj
-          </button>
-          <button
-            className="button button--full filter-button"
-            onClick={onClick}
-          >
-            {isExpenseEdited ? `Zapisz` : `Dodaj`}
-          </button>
-        </div>
-      </form>
-    </Suspense>
+        }
+      </fieldset>
+      <fieldset className="form-element">
+        <label htmlFor="category">Wybierz kategorię</label>
+        <select
+          className="input filters__input"
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        >
+          <option value="groceries">spożywcze</option>
+          <option value="drugstore">chemia</option>
+          <option value="gifts">prezenty</option>
+          <option value="goouts">wyjścia</option>
+          <option value="alcohol">alkohol</option>
+          <option value="home">domowe</option>
+        </select>
+      </fieldset>
+      <fieldset className="form-element">
+        <label htmlFor="details">Dodaj komentarz</label>
+        <textarea
+          className="form-element__details input"
+          id="details"
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          rows={6}
+          maxLength={150}
+        />
+      </fieldset>
+      <div className="filters__button-container">
+        <button
+          className="button button--dark filter-button"
+          onClick={handleCancelForm}
+        >
+          Anuluj
+        </button>
+        <button className="button button--full filter-button" onClick={onClick}>
+          {isExpenseEdited ? `Zapisz` : `Dodaj`}
+        </button>
+      </div>
+    </form>
   );
 };
 

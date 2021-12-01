@@ -16,7 +16,6 @@ const LineChart = ({ data, categories }) => {
     !!monthData ? Math.max.apply(0, Object.values(monthData)) : 0;
 
   const yMaxValue = d3.max(data, (d) => {
-    console.log("max", d);
     return getMaxAmountForMonth(d[1]);
   });
   const parseDate = d3.timeParse("%m/%Y");
@@ -25,7 +24,6 @@ const LineChart = ({ data, categories }) => {
     .scaleTime()
     .domain(
       d3.extent(data, (d) => {
-        console.log("extent", parseDate(d[0]));
         parseDate(d[0]);
       })
     )
@@ -53,11 +51,9 @@ const LineChart = ({ data, categories }) => {
     return d3
       .line()
       .x((d) => {
-        console.log("xd:", d);
         return getX(parseDate(d[0]));
       })
       .y((d) => {
-        console.log("gety:", getY(!!d[1] ? d[1][category] : 0));
         return getY(!!d[1] ? d[1][category] : 0);
       })
       .curve(d3.curveLinear)(Array.from(data));
@@ -94,7 +90,6 @@ const LineChart = ({ data, categories }) => {
           data.size > 0 &&
           !!categories &&
           categories.map((category) => {
-            console.log(category);
             return (
               <path
                 key={`path-${category}`}

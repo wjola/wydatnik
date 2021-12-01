@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { connect } from "react-redux";
 import getSelectedExpenses from "../selectors/selectExpenses";
+import PageLoader from "./PageLoader";
 
 const FiltersList = React.lazy(() => import("./FiltersList"));
 const Expense = React.lazy(() => import("./Expense"));

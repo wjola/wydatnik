@@ -3,7 +3,7 @@
   "name": "wydatnik",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": "webpack --watch",
     "dev-server": "webpack serve --open --config webpack.dev.js"

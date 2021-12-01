@@ -13,10 +13,10 @@ const getSelectedExpenses = (expenses, filters) => {
       const amountToMatch =
         !filters.amountTo ||
         (filters.amountTo && expense.amount < filters.amountTo);
-      const dateFromMatch = moment(expense.date, "D/MM/YYYY").isAfter(
+      const dateFromMatch = moment(expense.date, "D/MM/YYYY").isSameOrAfter(
         filters.startDate
       );
-      const dateToMatch = moment(expense.date, "D/MM/YYYY").isBefore(
+      const dateToMatch = moment(expense.date, "D/MM/YYYY").isSameOrBefore(
         filters.endDate
       );
 

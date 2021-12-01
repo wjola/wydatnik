@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Router, Switch } from "react-router-dom";
+import { HashRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import useDeviceClass from "../utils/useDeviceClass";
@@ -39,7 +39,7 @@ const AppRouter = ({ signIn, setExpenses }) => {
   });
 
   return (
-    <Router history={history}>
+    <HashRouter basename="wydatnik/">
       <Suspense fallback={<PageLoader />}>
         <Header />
         <Switch>
@@ -55,7 +55,7 @@ const AppRouter = ({ signIn, setExpenses }) => {
         </Switch>
         {!isDesktop && <Navigation />}
       </Suspense>
-    </Router>
+    </HashRouter>
   );
 };
 
