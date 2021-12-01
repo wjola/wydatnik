@@ -1,27 +1,30 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { connect } from "react-redux";
-import Expense from "./Expense";
-import FiltersList from "./FiltersList";
 import getSelectedExpenses from "../selectors/selectExpenses";
+
+const FiltersList = React.lazy(() => import("./FiltersList"));
+const Expense = React.lazy(() => import("./Expense"));
 
 const ExpenseList = ({ expenses }) => {
   return (
-    <div className="expense-list-container container">
-      <FiltersList />
-      <h3 className="expense-list__header">Ostatnie wydatki:</h3>
-      {expenses.map((expense) => {
-        return (
-          <Expense
-            id={expense.id}
-            key={expense.id}
-            amount={expense.amount}
-            category={expense.category}
-            date={expense.date}
-            details={expense.details}
-          />
-        );
-      })}
-    </div>
+    <Suspense fallback={<PageLoader />}>
+      <div className="expense-list-container container">
+        <FiltersList />
+        <h3 className="expense-list__header">Ostatnie wydatki:</h3>
+        {expenses.map((expense) => {
+          return (
+            <Expense
+              id={expense.id}
+              key={expense.id}
+              amount={expense.amount}
+              category={expense.category}
+              date={expense.date}
+              details={expense.details}
+            />
+          );
+        })}
+      </div>
+    </Suspense>
   );
 };
 

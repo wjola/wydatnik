@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import PieChart from "./PieChart";
-import LineChart from "./LineChart";
 import { getCategories } from "../utils/categoriesData";
 import { compareDates, getMonthsBetweenDates } from "../utils/chartDataUtils";
-import FormInputDateRange from "./FormInputDateRange";
-import FormInputCategory from "./FormInputCategory";
+import PageLoader from "./PageLoader";
+
+const PieChart = React.lazy(() => import("./PieChart"));
+const LineChart = React.lazy(() => import("./LineChart"));
+const FormInputDateRange = React.lazy(() => import("./FormInputDateRange"));
+const FormInputCategory = React.lazy(() => import("./FormInputCategory"));
 
 const ChartsPage = ({ expenses }) => {
   const [pieChartData, setPieChartData] = useState([]);
@@ -137,63 +139,65 @@ const ChartsPage = ({ expenses }) => {
   };
 
   return (
-    <div className="subpage__body container">
-      <div className="chart-container">
-        <h2>
-          Porównanie proporcji wydatków między{" "}
-          {moment(pieChartDateStart).format("DD-MM-YYYY")} a{" "}
-          {moment(pieChartDateEnd).format("DD-MM-YYYY")}
-        </h2>
-        <form>
-          <FormInputDateRange
-            startDate={pieChartDateStart}
-            endDate={pieChartDateEnd}
-            setStartDate={setPieChartDateStart}
-            setEndDate={setPieChartDateEnd}
-          />
-        </form>
-        {pieChartData.length !== 0 ? (
-          <PieChart data={pieChartData} />
-        ) : (
-          <p>Brak wydatków w wybranym czasie.</p>
-        )}
+    <Suspense fallback={<PageLoader />}>
+      <div className="subpage__body container">
+        <div className="chart-container">
+          <h2>
+            Porównanie proporcji wydatków między{" "}
+            {moment(pieChartDateStart).format("DD-MM-YYYY")} a{" "}
+            {moment(pieChartDateEnd).format("DD-MM-YYYY")}
+          </h2>
+          <form>
+            <FormInputDateRange
+              startDate={pieChartDateStart}
+              endDate={pieChartDateEnd}
+              setStartDate={setPieChartDateStart}
+              setEndDate={setPieChartDateEnd}
+            />
+          </form>
+          {pieChartData.length !== 0 ? (
+            <PieChart data={pieChartData} />
+          ) : (
+            <p>Brak wydatków w wybranym czasie.</p>
+          )}
+        </div>
+        <div className="chart-container">
+          <h2>
+            Porównanie wydatków w kategoriach między{" "}
+            {moment(lineChartDateStart).format("DD-MM-YYYY")} a{" "}
+            {moment(lineChartDateEnd).format("DD-MM-YYYY")}
+          </h2>
+          <form>
+            <FormInputDateRange
+              startDate={lineChartDateStart}
+              endDate={lineChartDateEnd}
+              setStartDate={setLineChartDateStart}
+              setEndDate={setLineChartDateEnd}
+            />
+            <FormInputCategory
+              selectedCategories={lineChartCategories}
+              handleSelectCategory={(category) =>
+                setLineChartCategories([...lineChartCategories, category])
+              }
+              handleUnselectCategory={(removedCategory) =>
+                setLineChartCategories(
+                  lineChartCategories.filter((category) => {
+                    return category !== removedCategory;
+                  })
+                )
+              }
+            />
+          </form>
+          {!!lineChartData &&
+          lineChartData.length !== 0 &&
+          lineChartCategories.length > 0 ? (
+            <LineChart data={lineChartData} categories={lineChartCategories} />
+          ) : (
+            <p>Brak wydatków dla podanych kryteriów.</p>
+          )}
+        </div>
       </div>
-      <div className="chart-container">
-        <h2>
-          Porównanie wydatków w kategoriach między{" "}
-          {moment(lineChartDateStart).format("DD-MM-YYYY")} a{" "}
-          {moment(lineChartDateEnd).format("DD-MM-YYYY")}
-        </h2>
-        <form>
-          <FormInputDateRange
-            startDate={lineChartDateStart}
-            endDate={lineChartDateEnd}
-            setStartDate={setLineChartDateStart}
-            setEndDate={setLineChartDateEnd}
-          />
-          <FormInputCategory
-            selectedCategories={lineChartCategories}
-            handleSelectCategory={(category) =>
-              setLineChartCategories([...lineChartCategories, category])
-            }
-            handleUnselectCategory={(removedCategory) =>
-              setLineChartCategories(
-                lineChartCategories.filter((category) => {
-                  return category !== removedCategory;
-                })
-              )
-            }
-          />
-        </form>
-        {!!lineChartData &&
-        lineChartData.length !== 0 &&
-        lineChartCategories.length > 0 ? (
-          <LineChart data={lineChartData} categories={lineChartCategories} />
-        ) : (
-          <p>Brak wydatków dla podanych kryteriów.</p>
-        )}
-      </div>
-    </div>
+    </Suspense>
   );
 };
 

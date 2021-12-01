@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { DateRangePicker } from "react-dates";
+import React, { useState, Suspense } from "react";
+import PageLoader from "./PageLoader";
+
+const { DateRangePicker } = React.lazy(() => import("react-dates"));
 
 const FormInputDateRange = ({
   startDate,
@@ -10,23 +12,25 @@ const FormInputDateRange = ({
   const [calendarFocus, setCalendarFocus] = useState(null);
 
   return (
-    <fieldset className="date-picker">
-      <label>Wybierz zakres dat:</label>
-      <DateRangePicker
-        startDate={startDate}
-        startDateId="startDateId"
-        endDate={endDate}
-        endDateId="endDateId"
-        onDatesChange={({ startDate, endDate }) => {
-          setStartDate(startDate.startOf("day"));
-          setEndDate(endDate.startOf("day"));
-        }}
-        focusedInput={calendarFocus}
-        onFocusChange={(focusedInput) => setCalendarFocus(focusedInput)}
-        numberOfMonths={1}
-        isOutsideRange={() => false}
-      />
-    </fieldset>
+    <Suspense fallback={<PageLoader />}>
+      <fieldset className="date-picker">
+        <label>Wybierz zakres dat:</label>
+        <DateRangePicker
+          startDate={startDate}
+          startDateId="startDateId"
+          endDate={endDate}
+          endDateId="endDateId"
+          onDatesChange={({ startDate, endDate }) => {
+            setStartDate(startDate.startOf("day"));
+            setEndDate(endDate.startOf("day"));
+          }}
+          focusedInput={calendarFocus}
+          onFocusChange={(focusedInput) => setCalendarFocus(focusedInput)}
+          numberOfMonths={1}
+          isOutsideRange={() => false}
+        />
+      </fieldset>
+    </Suspense>
   );
 };
 

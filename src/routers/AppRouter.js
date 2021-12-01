@@ -7,6 +7,8 @@ import { auth } from "../firebase/firebase";
 import { signIn } from "../actions/auth";
 import { setExpensesAsync } from "../actions/expenses";
 import PageLoader from "../components/PageLoader";
+// import PrivateRoute from "./PrivateRoute";
+// import PublicRoute from "./PublicRoute";
 
 const PrivateRoute = React.lazy(() => import("./PrivateRoute"));
 const PublicRoute = React.lazy(() => import("./PublicRoute"));

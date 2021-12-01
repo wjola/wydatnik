@@ -1,13 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { connect } from "react-redux";
-import ExpenseForm from "./ExpenseForm";
+import PageLoader from "./PageLoader";
+
+const ExpenseForm = React.lazy(() => import("./ExpenseForm"));
 
 const EditExpensePage = ({ expense }) => {
   return (
-    <div className="subpage__body container">
-      <h2 className="subpage__header">Edytuj dane o wydatku:</h2>
-      <ExpenseForm expense={expense} />
-    </div>
+    <Suspense fallback={<PageLoader />}>
+      <div className="subpage__body container">
+        <h2 className="subpage__header">Edytuj dane o wydatku:</h2>
+        <ExpenseForm expense={expense} />
+      </div>
+    </Suspense>
   );
 };
 
