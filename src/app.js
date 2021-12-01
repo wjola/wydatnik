@@ -7,6 +7,7 @@ import "react-dates/lib/css/_datepicker.css";
 import "./styles/react_dates_overrides.css";
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/store";
+import PageLoader from "./components/PageLoader";
 
 const store = configureStore();
 
@@ -18,7 +19,4 @@ const jsx = (
 
 store.getState().user
   ? ReactDOM.render(jsx, document.getElementById("app"))
-  : ReactDOM.render(
-      <div className="loader"></div>,
-      document.getElementById("app")
-    );
+  : ReactDOM.render(<PageLoader />, document.getElementById("app"));

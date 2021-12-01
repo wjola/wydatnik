@@ -1,6 +1,4 @@
 /node_modules
 package-lock.json
-/src/bundle.js
-/public/app.js
-/public/bundle.js
+/public
 .env
