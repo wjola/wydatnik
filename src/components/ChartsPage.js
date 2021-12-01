@@ -43,8 +43,10 @@ const ChartsPage = ({ expenses }) => {
 
   const getExpensesFilteredByDate = (dateStart, dateEnd) => {
     return expenses.filter((d) => {
-      const dateFromMatch = moment(d.date, "DD/MM/YYYY").isAfter(dateStart);
-      const dateToMatch = moment(d.date, "DD/MM/YYYY").isBefore(dateEnd);
+      const dateFromMatch = moment(d.date, "DD/MM/YYYY").isSameOrAfter(
+        dateStart
+      );
+      const dateToMatch = moment(d.date, "DD/MM/YYYY").isSameOrBefore(dateEnd);
 
       return dateFromMatch && dateToMatch;
     });
