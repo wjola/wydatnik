@@ -3,6 +3,7 @@
 An application for expenses analysis.
 
 Demo: [Wydatnik](https://wjola.github.io/wydatnik)
+Demo credentials: email - tttt@ttt.ttt, pass: qweqwe
 
 ## For this project I used
 * React with Redux
