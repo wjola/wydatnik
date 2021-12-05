@@ -18,3 +18,18 @@ Demo: [Wydatnik](https://wjola.github.io/wydatnik)
 * Creating account with email and password
 * Signing in by Google account or by email and password
 * Expenses analysis with pie chart and line chart
+
+## Screenshots
+Expenses overview:
+
+![wydatnik-tablet-overview.png](/wydatnik-tablet-overview.png)
+
+
+Filters settings:
+
+![wydatnik-tablet-filters.png](/wydatnik-tablet-filters.png)
+
+Pie Chart:
+
+![wydatnik-desktop-pie.png](/wydatnik-desktop-pie.png)
+
