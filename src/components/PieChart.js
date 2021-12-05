@@ -1,17 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getDisplayedNameForCategory } from "../utils/categoriesData";
+import useDeviceClass from "../utils/useDeviceClass";
 
 const PieChart = ({ data }) => {
-  const margin = {
-    top: 100,
-    right: 100,
-    bottom: 100,
-    left: 150,
-  };
-  const width = 2 * 100 + margin.left + margin.right;
-  const height = 2 * 100 + margin.top + margin.bottom;
+  const device = useDeviceClass();
+  const [width, setWidth] = useState(400);
+  const [height, setHeight] = useState(400);
+  const [margin, setMargin] = useState(100);
+  const [outerRadius, setOuterRadius] = useState(150);
+  const [responsiveDivisor, setResponsiveDivisor] = useState(1);
 
   useEffect(() => {
+    if (device === "smartphone") {
+      setWidth(350);
+      setHeight(325);
+      setMargin(75);
+      setOuterRadius(125);
+      setResponsiveDivisor(1.15);
+    } else if (device === "smartphone-small") {
+      setWidth(300);
+      setHeight(200);
+      setMargin(50);
+      setOuterRadius(75);
+      setResponsiveDivisor(2);
+    }
     drawChart();
   }, []);
 
@@ -19,7 +31,27 @@ const PieChart = ({ data }) => {
     drawChart();
   }, [data]);
 
-  function drawChart() {
+  useEffect(() => {
+    drawChart();
+  }, [width]);
+
+  useEffect(() => {
+    if (device === "smartphone") {
+      setWidth(350);
+      setHeight(325);
+      setMargin(75);
+      setOuterRadius(125);
+      setResponsiveDivisor(1.15);
+    } else if (device === "smartphone-small") {
+      setWidth(300);
+      setHeight(200);
+      setMargin(50);
+      setOuterRadius(75);
+      setResponsiveDivisor(2);
+    }
+  }, [device]);
+
+  const drawChart = () => {
     const colorScale = d3
       .scaleSequential()
       .interpolator(d3.interpolateCool)
@@ -31,12 +63,12 @@ const PieChart = ({ data }) => {
     const svg = d3
       .select("#pie-container")
       .append("svg")
-      .attr("width", width)
+      .attr("width", width + margin)
       .attr("height", height)
       .append("g")
-      .attr("transform", `translate(${width / 2}, ${height / 2})`);
+      .attr("transform", `translate(${margin * 2.5}, ${margin * 2})`);
 
-    const arcGenerator = d3.arc().innerRadius(0).outerRadius(150);
+    const arcGenerator = d3.arc().innerRadius(0).outerRadius(outerRadius);
     const pieGenerator = d3
       .pie()
       .padAngle(0)
@@ -60,25 +92,25 @@ const PieChart = ({ data }) => {
     arc
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("x", function (d) {
-        var a = d.startAngle + (d.endAngle - d.startAngle) / 2 - Math.PI / 2;
+      .attr("x", (d) => {
+        const a = d.startAngle + (d.endAngle - d.startAngle) / 2 - Math.PI / 2;
         d.cx = Math.cos(a) * (150 - 45);
 
-        return (d.x = Math.cos(a) * (150 + 30));
+        return (d.x = Math.cos(a) * (150 + 30)) / responsiveDivisor;
       })
-      .attr("y", function (d) {
-        var a = d.startAngle + (d.endAngle - d.startAngle) / 2 - Math.PI / 2;
+      .attr("y", (d) => {
+        const a = d.startAngle + (d.endAngle - d.startAngle) / 2 - Math.PI / 2;
         d.cy = Math.sin(a) * (150 - 45);
 
-        return (d.y = Math.sin(a) * (150 + 30));
+        return (d.y = Math.sin(a) * (150 + 30)) / responsiveDivisor;
       })
-      .text(function (d) {
+      .text((d) => {
         return getDisplayedNameForCategory(d.data.category);
       })
       .style("font-size", "15px")
       .style("fill", "#000000")
       .each(function (d) {
-        var bbox = this.getBBox();
+        const bbox = this.getBBox();
         d.sx = d.x - bbox.width / 2 - 2;
         d.ox = d.x + bbox.width / 2 + 2;
         d.sy = d.oy = d.y + 5;
@@ -106,40 +138,44 @@ const PieChart = ({ data }) => {
       .style("fill", "none")
       .style("stroke", "#383838")
       .attr("marker-end", "url(#circ)")
-      .attr("d", function (d) {
+      .attr("d", (d) => {
+        let divisor = 1;
+        if (device === "smartphone-small") {
+          divisor = 2;
+        }
         if (d.cx > d.ox) {
           return (
             "M" +
-            d.sx +
+            d.sx / responsiveDivisor +
             "," +
-            d.sy +
+            d.sy / responsiveDivisor +
             "L" +
-            d.ox +
+            d.ox / responsiveDivisor +
             "," +
-            d.oy +
+            d.oy / responsiveDivisor +
             " " +
-            d.cx +
+            d.cx / responsiveDivisor +
             "," +
-            d.cy
+            d.cy / responsiveDivisor
           );
         } else {
           return (
             "M" +
-            d.ox +
+            d.ox / responsiveDivisor +
             "," +
-            d.oy +
+            d.oy / responsiveDivisor +
             "L" +
-            d.sx +
+            d.sx / responsiveDivisor +
             "," +
-            d.sy +
+            d.sy / responsiveDivisor +
             " " +
-            d.cx +
+            d.cx / responsiveDivisor +
             "," +
-            d.cy
+            d.cy / responsiveDivisor
           );
         }
       });
-  }
+  };
 
   return <div id="pie-container" />;
 };

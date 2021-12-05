@@ -140,9 +140,16 @@
     display: flex;
     flex: 1 0 auto;
     justify-content: center;
+    width: 100%;
+
+    @media (min-width: 500px) {
+      width: auto;
+    }
 
     &:first-child {
-      margin-right: 2rem;
+      @media (min-width: 500px) {
+        margin-right: 2rem;
+      }
     }
   }
 }

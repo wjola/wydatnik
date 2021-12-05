@@ -7,7 +7,6 @@ const HomePage = () => {
 
   const onSigningInClick = (e) => {
     e.preventDefault();
-
     history.push("/signin");
   };
 

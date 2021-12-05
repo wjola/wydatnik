@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 
 const useDeviceClass = () => {
-  const [deviceClass, setDeviceClass] = useState("");
+  const [deviceClass, setDeviceClass] = useState("desktop");
 
   const calculateDeviceClass = () => {
     const windowWidth = window.innerWidth;
-    if (windowWidth < 600) {
+
+    if (windowWidth < 400) {
+      setDeviceClass("smartphone-small");
+    } else if (windowWidth < 600) {
       setDeviceClass("smartphone");
     } else if (windowWidth < 1000) {
       setDeviceClass("tablet");
