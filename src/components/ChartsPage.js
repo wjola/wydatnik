@@ -30,7 +30,6 @@ const ChartsPage = ({ expenses }) => {
 
   useEffect(() => {
     getDataForPieChart();
-    getDataForLineChart();
   }, []);
 
   useEffect(() => {
@@ -38,8 +37,12 @@ const ChartsPage = ({ expenses }) => {
   }, [pieChartDateStart, pieChartDateEnd]);
 
   useEffect(() => {
-    getDataForLineChart();
-  }, [lineChartCategories, lineChartDateStart, lineChartDateStart]);
+    if (lineChartCategories.length > 0) {
+      getDataForLineChart();
+    } else {
+      setLineChartData([]);
+    }
+  }, [lineChartCategories, lineChartDateStart, lineChartDateEnd]);
 
   const getExpensesFilteredByDate = (dateStart, dateEnd) => {
     return expenses.filter((d) => {
@@ -178,9 +181,9 @@ const ChartsPage = ({ expenses }) => {
             />
             <FormInputCategory
               selectedCategories={lineChartCategories}
-              handleSelectCategory={(category) =>
-                setLineChartCategories([...lineChartCategories, category])
-              }
+              handleSelectCategory={(category) => {
+                setLineChartCategories([...lineChartCategories, category]);
+              }}
               handleUnselectCategory={(removedCategory) =>
                 setLineChartCategories(
                   lineChartCategories.filter((category) => {
@@ -190,9 +193,7 @@ const ChartsPage = ({ expenses }) => {
               }
             />
           </form>
-          {!!lineChartData &&
-          lineChartData.length !== 0 &&
-          lineChartCategories.length > 0 ? (
+          {lineChartCategories.length > 0 && lineChartData.length !== 0 ? (
             <LineChart data={lineChartData} categories={lineChartCategories} />
           ) : (
             <p>Brak wydatków dla podanych kryteriów.</p>

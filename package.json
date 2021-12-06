@@ -5,6 +5,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "deploy": "gh-pages -d public",
     "build": "webpack --config webpack.prod.js",
     "dev-server": "webpack serve --open --config webpack.dev.js"
   },

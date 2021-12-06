@@ -22,16 +22,12 @@ const LineChart = ({ data, categories }) => {
 
   const getX = d3
     .scaleTime()
-    .domain(
-      d3.extent(data, (d) => {
-        parseDate(d[0]);
-      })
-    )
+    .domain(d3.extent(data, (d) => parseDate(d[0])))
     .range([0, width]);
 
   const getY = d3
     .scaleLinear()
-    .domain([yMinValue - 1, yMaxValue + 2])
+    .domain([yMinValue, yMaxValue])
     .range([height, 0]);
 
   const getXAxis = (ref) => {
@@ -50,11 +46,13 @@ const LineChart = ({ data, categories }) => {
   const getLinePathForCategory = (category) => {
     return d3
       .line()
-      .x((d) => {
-        return getX(parseDate(d[0]));
-      })
+      .x((d) => getX(parseDate(d[0])))
       .y((d) => {
-        return getY(!!d[1] ? d[1][category] : 0);
+        if (d[1] && category && d[1][category]) {
+          return getY(d[1][category]);
+        } else {
+          return getY(0);
+        }
       })
       .curve(d3.curveLinear)(Array.from(data));
   };
@@ -83,7 +81,7 @@ const LineChart = ({ data, categories }) => {
         <g
           className="axis xAxis"
           ref={getXAxis}
-          transform={`translate(0,${height})`}
+          transform={`translate(0,${height + 5})`}
         />
 
         {!!data &&
@@ -130,9 +128,9 @@ const LineChart = ({ data, categories }) => {
                     <circle
                       cx={getX(parseDate(month))}
                       cy={getY(Number(amount))}
-                      r={4}
+                      r={2}
                       fill="#891EBB"
-                      strokeWidth={4}
+                      strokeWidth={2}
                       stroke="#891EBB"
                       style={{ transition: "ease-out .1s" }}
                     />
